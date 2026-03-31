@@ -54,6 +54,7 @@ button:hover {
     background-color: #eb4d4b;
 }
 
+#bluetooth,
 #pulseaudio,
 #clock,
 #battery,
@@ -84,6 +85,13 @@ button:hover {
     color: @mauve;
     border-bottom: 2px solid @mauve;
 }
+
+#bluetooth {
+    background: transparent;
+    color: #eceff4;
+    padding: 0 10px;
+    border-bottom: 2px solid @transparent;
+}   
 
 #pulseaudio {
     color: @blue;
