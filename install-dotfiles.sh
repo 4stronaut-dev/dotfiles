@@ -10,6 +10,8 @@ stow -v -R --no-folding hyprlock
 atow -v -R --no-folding hyprmocha
 stow -v -R --no-folding hyprpaper
 stow -v -R --no-folding kitty
+stow -v -R --no-folding lazyvim
+stow -v -R --no-folding starship
 stow -v -R --no-folding starship
 stow -v -R --no-folding waybar
 stow -v -R --no-folding wofi
