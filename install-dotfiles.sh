@@ -11,7 +11,8 @@ atow -v -R --no-folding hyprmocha
 stow -v -R --no-folding hyprpaper
 stow -v -R --no-folding kitty
 stow -v -R --no-folding lazyvim
-stow -v -R --no-folding starship
+stow -v -R --no-folding mpv
+stow -v -R --no-folding scripts
 stow -v -R --no-folding starship
 stow -v -R --no-folding waybar
 stow -v -R --no-folding wofi
