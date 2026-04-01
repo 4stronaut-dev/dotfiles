@@ -2,11 +2,34 @@
   "position": "top",
   "output": "",
   "modules-left": ["hyprland/workspaces"],
-  "modules-center": ["hyprland/window"],
-  "modules-right": ["network#wifi","network#ethernet","bluetooth","pulseaudio","battery","clock"],
+  "modules-center": ["clock"],
+  "modules-right": ["network#wifi","network#ethernet","bluetooth","pulseaudio","battery"],
   "clock": {
-    "format": "<span foreground='#f5c2e7'>   </span>{:%a %d %H:%M}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    "interval": "1",
+    "format-alt": "{:%T}",
+    "format": "{:%T | %Y %b %d, %a}",
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "iso8601": true,
+      "mode"          : "year",
+      "mode-mon-col"  : 4,
+      "weeks-pos"     : "left",
+      "on-scroll"     : 1,
+      "format": {
+        "months":     "<span color='#ffead3'><b>{}</b></span>",
+        "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+        "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    },
+    "actions":  {
+      "on-click-right": "mode",
+      "on-scroll-up": "tz_up",
+      "on-scroll-down": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
   },
   "battery": {
     "states": {
@@ -25,33 +48,39 @@
   },
   "network#wifi": {
     "interface": "wlan0",
-    "format-wifi": "<span size='13000' foreground='#f5e0dc'>󰖩 </span>{essid}/{ipaddr}/{ifname}",
-    "format-linked": "<span size='13000' foreground='#f5e0dc'>󱚵 </span>{essid}/{ipaddr}/{ifname}",
+    "format-wifi": "<span size='13000' foreground='#f5e0dc'>󰖩 </span>[{essid}]󰀂[{ifname}/{ipaddr}]",
+    "format-linked": "<span size='13000' foreground='#f5e0dc'>󱚵 </span>[{essid}]󰀂[{ifname}]",
     "format-disconnected": "<span size='13000' foreground='#f5e0dc'>󰖪 </span>no wifi",
     "tooltip-format-wifi": "Signal Strenght: {signalStrength}%",
     "on-click": "nm-connection-editor"
   },
   "network#ethernet": {
     "interface" : "eno1",
-    "format-ethernet": "<span size='13000' foreground='#f5e0dc'> </span>{ipaddr}/{ifname}",
-    "format-linked": "<span size='13000' foreground='#f5e0dc'>󰈁 </span>{ipaddr}/{ifname}",
-    "format-disconnected": "<span size='13000' foreground='#f5e0dc'>󰈂 </span>no ethernet",
+    "format-ethernet": "<span size='13000' foreground='#f5e0dc'>  </span>{ifname}@{ipaddr}",
+    "format-linked": "<span size='13000' foreground='#f5e0dc'>󰈁 </span>[{ifname}]",
+    "format-disconnected": "<span size='13000' foreground='#f5e0dc'>󰈂 </span>[no ethernet]",
     "on-click": "nm-connection-editor"
   },
   "bluetooth": {
-    "format": " {status}",
-    "format-disabled": " {status}",
-    "format-connected": " {num_connections}",
-    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "max-length": "16",
+    "format-device-preference": ["WH-1000XM5","Xbox Wireless Controller","HUAWEI P30 Pro 4stronaut"],
+    "format-off": "󰂲 {status}",
+    "format-disabled": "󰂲 {status}",
+    "format-on": "󰂯 {status}",
+    "format-connected": "󰂱 [{num_connections}]:{device_alias}",
+    "format-connected-battery": "󰂱 [{num_connections}]:{device_alias} (󰥈 {device_battery_percentage}%)",
+    "tooltip": "true",
+    "tooltip-format-enumerate-connected": "{device_alias}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias} (󰥈 {device_battery_percentage}%)",
     "tooltip-format-connected": "{device_enumerate}",
     "on-click": "blueman-manager"
   },
   "pulseaudio": {
-      "format": "{icon}  {volume}%",
-      "format-muted": "",
-      "format-icons": {
-          "default": ["", "", " "]
-      },
-      "on-click": "pavucontrol"
+    "format": "{icon} {volume}%",
+    "format-muted": " muted",
+    "format-icons": {
+      "default": [" ", " ", " "]
+    },
+    "on-click": "pavucontrol" 
   }
 }
