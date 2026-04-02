@@ -5,37 +5,23 @@ yay -S --needed --noconfirm sddm-theme-sugar-candy
 
 echo "Theme has been installed for sddm!"
 
-# Create hyperland config for SDDM's environment to handle monitor layout
-
-# Create directory for the hyprland config file
-sudo mkdir -p /var/lib/sddm/.config/hypr
-
-# Create hyprland configuration
-sudo tee /var/lib/sddm/.config/hypr/hyprland.conf >/dev/null <<'EOF'
-# Create dedicated Hyprland configuration for SDDM's environment
-# to handle monitor layout by wayland compositor
-monitor=DP-1, preferred, 1440x720, 1
-monitor=DP-2, preferred, 0x0, 1, transform, 3
-
-misc {
-    force_default_wallpaper = 0
-    disable_hyprland_logo = true
-}
-
-workspace=1, monitor:DP-1
-workspace=2, monitor:DP-2
-EOF
-
-# Create SDDM config file to use wayland backend and apply the installed theme
+# Create SDDM config to ensure it runs on X11 backend
 sudo tee /etc/sddm.conf >/dev/null <<'EOF'
 [General]
-DisplayServer=wayland
+DisplayServer=X11
+DefaultSession=hyprland.desktop
 
-[Wayland]
-CompositorCommand=start-hyprland
+[X11]
+DisplayCommand=/usr/share/sddm/scripts/Xsetup
 
 [Theme]
 Current=Sugar-Candy
 EOF
 
-echo "Sddm configuration completed! KNOWN ISSUE: Wrong handling of focus for main display"
+# Edit Xsetup to define the monitor layout for SDDM based on X11
+sudo tee -a /usr/share/sddm/scripts/Xsetup <<'EOF'
+xrandr --output DP-2 --noprimary --mode 2560x1440 --rate 144 --rotate left --pos 0x0
+xrandr --output DP-1 --primary --mode 2560x1440 --rate 180 --pos 1440x720
+EOF
+
+echo "Sddm configuration completed!"
