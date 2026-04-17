@@ -22,13 +22,12 @@ if grep -qE '^\s*#\s*\[multilib\]' "$PACMAN_CONF"; then
   # Uncomment the [multilib] line and the line immediately following it
   sed -i -e '/^\s*#\s*\[multilib\]/,+1s/^#//' "$PACMAN_CONF"
   echo "Multilib repository has been enabled."
-#    echo "Please run 'sudo pacman -Syu' to update your package database."
 else
   echo "Multilib is already enabled."
 fi
 
 # Update package database and install gaming
-sudo pacman -S --needed --noconfirm lib32-mesa wine-staging winetricks \
+sudo pacman -Syu --needed --noconfirm lib32-mesa wine-staging winetricks \
   vkd3d lib32-vkd3d vulkan-radeon lib32-vulkan-radeon \
   vulkan-icd-loader lib32-vulkan-icd-loader \
   linux-headers dkms steam lutris gamescope
