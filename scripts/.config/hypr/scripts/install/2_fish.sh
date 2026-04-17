@@ -15,9 +15,4 @@ fi
 # make fish the default shell
 chsh -s "$FISH_PATH"
 
-# create basic alias set
-alias --save cl 'clear'
-alias --save la 'ls -ah1 --color=auto --group-directories-first'
-alias --save ll 'ls -lisah --color=auto --group-directories-first'
-
 echo "fish shell has been installed!"
