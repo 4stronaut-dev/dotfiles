@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # install Sugar-Candy theme for sddm login manager
-yay -S --needed --noconfirm sddm-theme-sugar-candy
+yay -S --needed --noconfirm sddm sddm-theme-sugar-candy
 
 echo "Theme has been installed for sddm!"
 

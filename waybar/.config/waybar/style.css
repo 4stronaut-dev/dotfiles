@@ -13,7 +13,6 @@ window#waybar {
     color: @overlay0;
     transition-property: background-color;
     transition-duration: 0.1s;
-    border-bottom: 1px solid @overlay1;
 }
 
 #window {
@@ -30,8 +29,8 @@ button {
 
 button:hover {
     background: inherit;
-    color: @mauve;
-    border-top: 2px solid @mauve;
+    color: @rosewater;
+    border-top: 2px solid @rosewater;
 }
 
 #workspaces button {
@@ -39,14 +38,15 @@ button:hover {
 }
 
 #workspaces button.focused {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: @rosewater;
-    border-top: 2px solid @rosewater;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: @mauve;
+    border-top: 2px solid @mauve;
 }
 
 #workspaces button.active {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.5);
     color: @mauve;
+    border-bottom: 2px solid @mauve;
     border-top: 2px solid @mauve;
 }
 
@@ -77,35 +77,35 @@ button:hover {
 }
 
 #clock {
-    color: @peach;
-    border-bottom: 2px solid @peach;
+    color: @lavender;
+    border-bottom: 2px solid @lavender;
 }
 
 #clock.date {
-    color: @mauve;
-    border-bottom: 2px solid @mauve;
+    color: @lavender;
+    border-bottom: 2px solid @lavender;
 }
 
 #bluetooth {
     background: transparent;
-    color: #eceff4;
+    color: @blue;
     padding: 0 10px;
     border-bottom: 2px solid @transparent;
 }   
 
 #pulseaudio {
-    color: @blue;
-    border-bottom: 2px solid @blue;
+    color: @teal;
+    border-bottom: 2px solid @teal;
 }
 
 #network.wifi {
-    color: @yellow;
-    border-bottom: 2px solid @yellow;
+    color: @flamingo;
+    border-bottom: 2px solid @flamingo;
 }
 
 #network.ethernet {
-    color: @yellow;
-    border-bottom: 2px solid @yellow;
+    color: @flamingo;
+    border-bottom: 2px solid @flamingo;
 }
 
 #idle_inhibitor {
@@ -118,8 +118,8 @@ button:hover {
 }
 
 #battery {
-    color: @green;
-    border-bottom: 2px solid @green;
+    color: @yellow;
+    border-bottom: 2px solid @yellow;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
