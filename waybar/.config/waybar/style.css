@@ -9,7 +9,7 @@
 
 window#waybar {
     background: transparent;
-    background-color: @crust;
+    background-color: rgba(0, 0, 0, 0.5);
     color: @overlay0;
     transition-property: background-color;
     transition-duration: 0.1s;
@@ -22,104 +22,104 @@ window#waybar {
 }
 
 button {
-    box-shadow: inset 0 -3px transparent;
     border: none;
     border-radius: 0;
 }
 
 button:hover {
-    background: inherit;
-    color: @rosewater;
-    border-top: 2px solid @rosewater;
+  color: @mauve;
+  background-color: @surface0;
+  border-radius: 10px;
 }
 
 #workspaces button {
-    padding: 0 4px;
+  padding: 1px 4px;
+  margin: 0;
 }
 
 #workspaces button.focused {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: @mauve;
-    border-top: 2px solid @mauve;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: @mauve;
+  border-top: 2px solid @mauve;
 }
 
 #workspaces button.active {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: @mauve;
-    border-bottom: 2px solid @mauve;
-    border-top: 2px solid @mauve;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: @mauve;
+  border-bottom: 2px solid @mauve;
+  border-top: 2px solid @mauve;
 }
 
 #workspaces button.urgent {
-    background-color: #eb4d4b;
-}
-
-#bluetooth,
-#pulseaudio,
-#clock,
-#battery,
-#cpu,
-#memory,
-#disk,
-#temperature,
-#backlight,
-#wireplumber,
-#tray,
-#network,
-#mode,
-#scratchpad {
-  margin-top: 2px;
-  margin-bottom: 2px;
-  margin-left: 4px;
-  margin-right: 4px;
-  padding-left: 4px;
-  padding-right: 4px;
+  background-color: @red;
 }
 
 #clock {
-    color: @lavender;
-    border-bottom: 2px solid @lavender;
+  background: transparent;
+  color: @lavender;
+  border-bottom: 2px solid @lavender;
 }
 
 #clock.date {
-    color: @lavender;
-    border-bottom: 2px solid @lavender;
+  background: transparent;
+  color: @lavender;
+  border-bottom: 2px solid @lavender;
 }
 
-#bluetooth {
-    background: transparent;
-    color: @blue;
-    padding: 0 10px;
-    border-bottom: 2px solid @transparent;
-}   
+#clock:hover {
+  background-color: @surface0;
+  border-radius: 10px;
+}
 
-#pulseaudio {
-    color: @teal;
-    border-bottom: 2px solid @teal;
+#network {
+  background: transparent;
+  transition: background-color 0.2s;
 }
 
 #network.wifi {
-    color: @flamingo;
-    border-bottom: 2px solid @flamingo;
+  padding: 2px 12px;
+  margin: 2px;
+  color: @flamingo;
+  border-bottom: 2px solid @flamingo;
 }
 
 #network.ethernet {
-    color: @flamingo;
-    border-bottom: 2px solid @flamingo;
+  padding: 2px 12px;
+  margin: 2px;
+  color: @flamingo;
+  border-bottom: 2px solid @flamingo;
 }
 
-#idle_inhibitor {
-    margin-right: 12px;
-    color: #7cb342;
+#network.wifi:hover,
+#network.ethernet:hover {
+  background-color: @surface0;
+  border-radius: 10px;
 }
 
-#idle_inhibitor.activated {
-    color: @red;
+#bluetooth {
+  background: transparent;
+  color: @blue;
+  padding: 2px 12px;
+  margin: 2px;
+  border-bottom: 2px solid @blue;
 }
 
-#battery {
-    color: @yellow;
-    border-bottom: 2px solid @yellow;
+#bluetooth:hover {
+  background-color: @surface0;
+  border-radius: 10px;
+}
+
+#pulseaudio {
+  background: transparent;
+  color: @teal;
+  padding: 2px 12px;
+  margin: 2px;
+  border-bottom: 2px solid @teal;
+}
+
+#pulseaudio:hover {
+  background-color: @surface0;
+  border-radius: 10px;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
@@ -130,11 +130,4 @@ button:hover {
 /* If workspaces is the rightmost module, omit right margin */
 .modules-right>widget:last-child>#workspaces {
     margin-right: 0;
-}
-
-#custom-vpn {
-    color: @lavender;
-    border-radius: 15px;
-    padding-left: 6px;
-    padding-right: 6px;
 }

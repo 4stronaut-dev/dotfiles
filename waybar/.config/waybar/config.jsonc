@@ -3,9 +3,10 @@
   "output": "",
   "modules-left": ["hyprland/workspaces"],
   "modules-center": ["clock"],
-  "modules-right": ["network#wifi","network#ethernet","bluetooth","pulseaudio","battery"],
+  "modules-right": ["group/network","bluetooth","pulseaudio"],
+
   "clock": {
-    "interval": "1",
+    "interval": 1,
     "format-alt": "{:%T}",
     "format": "{:%T | %Y %b %d, %a}",
     "tooltip-format": "<tt>{calendar}</tt>",
@@ -31,56 +32,56 @@
       "on-scroll-down": "shift_down"
     }
   },
-  "battery": {
-    "states": {
-      "warning": 30,
-      "critical": 15
-    },
-    "format": "<span size='13000' foreground='#a6e3a1'>{icon} </span> {capacity}%",
-    "format-warning": "<span size='13000' foreground='#B1E3AD'>{icon} </span> {capacity}%",
-    "format-critical": "<span size='13000' foreground='#E38C8F'>{icon} </span> {capacity}%",
-    "format-charging": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
-    "format-plugged": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
-    "format-alt": "<span size='13000' foreground='#B1E3AD'>{icon} </span> {time}",
-    "format-full": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
-    "format-icons": ["", "", "", "", ""],
-    "tooltip-format": "{time}"
+
+  "group/network": {
+    "orientation": "horizontal",
+    "modules": ["network#wifi","network#ethernet"]
   },
+
   "network#wifi": {
     "interface": "wlan0",
-    "format-wifi": "<span size='13000' foreground='#f5e0dc'>󰖩 </span>[{essid}]󰀂[{ifname}/{ipaddr}]",
-    "format-linked": "<span size='13000' foreground='#f5e0dc'>󱚵 </span>[{essid}]󰀂[{ifname}]",
-    "format-disconnected": "<span size='13000' foreground='#f5e0dc'>󰖪 </span>no wifi",
-    "tooltip-format-wifi": "Signal Strenght: {signalStrength}%",
-    "on-click": "nm-connection-editor"
+    "format-wifi": "{icon} 󰶣{bandwidthUpBits} | 󰶡{bandwidthDownBits}",
+    "format-icons": {
+      "default": ["󰤟","󰤢","󰤥","󰤨"]
+    },
+    "format-linked": "󱚵 {essid}-waiting for IP",
+    "format-disconnected": "󰖪 no wifi",
+    "tooltip-format-wifi": "{ifname}@{ipaddr} to [{essid}] on [{frequency}GHz] with ({signalStrength}%) signal",
+    "on-click": "kitty --class waybarmodule -e nmtui-connect",
+    "on-click-right": "nm-connection-editor"
   },
+
   "network#ethernet": {
     "interface" : "eno1",
-    "format-ethernet": "<span size='13000' foreground='#f5e0dc'>  </span>{ifname}@{ipaddr}",
-    "format-linked": "<span size='13000' foreground='#f5e0dc'>󰈁 </span>[{ifname}]",
-    "format-disconnected": "<span size='13000' foreground='#f5e0dc'>󰈂 </span>[no ethernet]",
-    "on-click": "nm-connection-editor"
+    "format-ethernet": "  󰶣{bandwidthUpBits} | 󰶡{bandwidthDownBits}",
+    "format-linked": "󰈁 {ifname} connected",
+    "format-disconnected": "󰈂 no ethernet",
+    "tooltip-format-ethernet": "Ethernet connection: {ifname}@{ipaddr}",
+    "on-click": "kitty --class waybarmodule -e nmtui-connect",
+    "on-click-right": "nm-connection-editor"
   },
+
   "bluetooth": {
     "max-length": "16",
     "format-device-preference": ["WH-1000XM5","Xbox Wireless Controller","HUAWEI P30 Pro 4stronaut"],
     "format-off": "󰂲 {status}",
     "format-disabled": "󰂲 {status}",
     "format-on": "󰂯 {status}",
-    "format-connected": "󰂱 [{num_connections}]:{device_alias}",
-    "format-connected-battery": "󰂱 [{num_connections}]:{device_alias} (󰥈 {device_battery_percentage}%)",
+    "format-connected": " [{num_connections}]:{device_alias}",
+    "format-connected-battery": " [{num_connections}]:{device_alias} (󰥈 {device_battery_percentage}%)",
     "tooltip": "true",
     "tooltip-format-enumerate-connected": "{device_alias}",
     "tooltip-format-enumerate-connected-battery": "{device_alias} (󰥈 {device_battery_percentage}%)",
     "tooltip-format-connected": "{device_enumerate}",
     "on-click": "blueman-manager"
   },
+
   "pulseaudio": {
     "format": "{icon} {volume}%",
     "format-muted": " muted",
     "format-icons": {
-      "default": [" ", " ", " "]
+      "default": ["󰕿", "", ""]
     },
-    "on-click": "pavucontrol" 
+    "on-click": "pavucontrol"
   }
 }
