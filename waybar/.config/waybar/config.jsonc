@@ -1,9 +1,14 @@
 {
   "position": "top",
   "output": "",
-  "modules-left": ["hyprland/workspaces"],
+  "modules-left": ["hyprland/workspaces","custom/ghub"],
   "modules-center": ["clock"],
   "modules-right": ["group/network","bluetooth","pulseaudio"],
+  
+  "custom/ghub": {
+    "format": "G-HUB",
+    "on-click": "solaar" 
+  },
 
   "clock": {
     "interval": 1,

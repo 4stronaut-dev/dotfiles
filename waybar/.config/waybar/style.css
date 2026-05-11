@@ -29,7 +29,7 @@ button {
 button:hover {
   color: @mauve;
   background-color: @surface0;
-  border-radius: 10px;
+  border-radius: 14px;
 }
 
 #workspaces button {
@@ -38,37 +38,70 @@ button:hover {
 }
 
 #workspaces button.focused {
-  background-color: rgba(0, 0, 0, 0.5);
+  background: transparent;
+  transition: background-color 0.2s;
   color: @mauve;
   border-top: 2px solid @mauve;
+  border-radius: 8px;
 }
 
 #workspaces button.active {
-  background-color: rgba(0, 0, 0, 0.5);
+  background: transparent;
+  transition: background-color 0.2s;
   color: @mauve;
   border-bottom: 2px solid @mauve;
   border-top: 2px solid @mauve;
+  border-radius: 8px;
+}
+
+#workspaces button.active:hover {
+  color: @mauve;
+  background-color: @surface0;
+  border-radius: 14px;
 }
 
 #workspaces button.urgent {
   background-color: @red;
 }
 
+#custom-ghub {
+  background: transparent;
+  transition: background-color 0.2s;
+  padding: 2px 12px;
+  margin: 2px;
+  margin-left: 12px;
+  color: @blue;
+  border-bottom: 2px solid @blue;
+  border-top: 2px solid @blue;
+  border-radius: 8px;
+}
+
+#custom-ghub:hover {
+  background-color: @surface0;
+  border-radius: 14px;
+}
+
 #clock {
   background: transparent;
+  transition: background-color 0.2s;
   color: @lavender;
   border-bottom: 2px solid @lavender;
+  border-top: 2px solid @lavender;
+  border-radius: 8px;
 }
 
 #clock.date {
   background: transparent;
+  transition: background-color 0.2s;
   color: @lavender;
   border-bottom: 2px solid @lavender;
+  border-top: 2px solid @lavender;
+  border-radius: 8px;
 }
 
 #clock:hover {
   background-color: @surface0;
-  border-radius: 10px;
+  border-radius: 14px;
 }
 
 #network {
@@ -81,6 +114,8 @@ button:hover {
   margin: 2px;
   color: @flamingo;
   border-bottom: 2px solid @flamingo;
+  border-top: 2px solid @flamingo;
+  border-radius: 8px;
 }
 
 #network.ethernet {
@@ -88,38 +123,46 @@ button:hover {
   margin: 2px;
   color: @flamingo;
   border-bottom: 2px solid @flamingo;
+  border-top: 2px solid @flamingo;
+  border-radius: 8px;
 }
 
 #network.wifi:hover,
 #network.ethernet:hover {
   background-color: @surface0;
-  border-radius: 10px;
+  border-radius: 14px;
 }
 
 #bluetooth {
   background: transparent;
+  transition: background-color 0.2s;
   color: @blue;
   padding: 2px 12px;
   margin: 2px;
   border-bottom: 2px solid @blue;
+  border-top: 2px solid @blue;
+  border-radius: 8px;
 }
 
 #bluetooth:hover {
   background-color: @surface0;
-  border-radius: 10px;
+  border-radius: 14px;
 }
 
 #pulseaudio {
   background: transparent;
+  transition: background-color 0.2s;
   color: @teal;
   padding: 2px 12px;
   margin: 2px;
   border-bottom: 2px solid @teal;
+  border-top: 2px solid @teal;
+  border-radius: 8px;
 }
 
 #pulseaudio:hover {
   background-color: @surface0;
-  border-radius: 10px;
+  border-radius: 14px;
 }
 
 /* If workspaces is the leftmost module, omit left margin */

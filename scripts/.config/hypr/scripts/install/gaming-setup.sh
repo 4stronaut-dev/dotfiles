@@ -61,6 +61,11 @@ sudo modprobe hid_xpadneo
 echo -e "hid_xpadneo" | sudo tee -a /etc/modules-load.d/xpadneo.conf
 echo "Xbox Series X/S controller driver configured. Please do pairing after reboot!"
 
+# Install Logitech Gamer Keyboard and Mouse handler application: Solaar
+sudo pacman -S --needed --noconfirm solaar
+# Apply device rules installed by Solaar to make the Logitech receiver accessible
+sudo udevadm control --reload-rules
+
 # Create necessary environment variables
 echo "Create necessary environment variables..."
 # Backup the original config (if not already backed up)
