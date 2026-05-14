@@ -1,14 +1,9 @@
 {
   "position": "top",
   "output": "",
-  "modules-left": ["hyprland/workspaces","custom/ghub"],
+  "modules-left": ["hyprland/workspaces"],
   "modules-center": ["clock"],
-  "modules-right": ["group/network","bluetooth","pulseaudio"],
-  
-  "custom/ghub": {
-    "format": "G-HUB",
-    "on-click": "solaar" 
-  },
+  "modules-right": ["custom/ghub","network","bluetooth","pulseaudio"],
 
   "clock": {
     "interval": 1,
@@ -37,31 +32,37 @@
       "on-scroll-down": "shift_down"
     }
   },
+  
+  "custom/ghub": {
+    "exec": "~/.config/waybar/scripts/waybar-ghub-handler.py",
+    "return-type": "json",
+    "interval": 60,
+    "format": "{icon}  {text}",
+    "format-icons": ["󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
+    "tooltip": true,
+    "on-click": "solaar"
+ },
 
-  "group/network": {
-    "orientation": "horizontal",
-    "modules": ["network#wifi","network#ethernet"]
-  },
-
-  "network#wifi": {
-    "interface": "wlan0",
-    "format-wifi": "{icon} 󰶣{bandwidthUpBits} | 󰶡{bandwidthDownBits}",
+  "network": {
+    "interval": 2,
+    "max-length": 25,
+    "format-disabled": "{icon} disabled",
+    "format-disconnected": "{icon} disconnected",
+    "format-linked": "{icon} {ifname} is getting IP",
+    "format-ethernet": "{icon}  󰕒{bandwidthUpBits:>4}  󰇚{bandwidthDownBits:>4}",
+    "format-wifi": "{icon}  󰕒{bandwidthUpBits:>4}  󰇚{bandwidthDownBits:>4}",
     "format-icons": {
-      "default": ["󰤟","󰤢","󰤥","󰤨"]
+      "disabled": "󰲛",
+      "disconnected": "󰌙",
+      "linked": "󰲐",
+      "wifi": ["󰤫","󰤟","󰤢","󰤥","󰤨"],
+      "ethernet": ""
     },
-    "format-linked": "󱚵 {essid}-waiting for IP",
-    "format-disconnected": "󰖪 no wifi",
-    "tooltip-format-wifi": "{ifname}@{ipaddr} to [{essid}] on [{frequency}GHz] with ({signalStrength}%) signal",
-    "on-click": "kitty --class waybarmodule -e nmtui-connect",
-    "on-click-right": "nm-connection-editor"
-  },
-
-  "network#ethernet": {
-    "interface" : "eno1",
-    "format-ethernet": "  󰶣{bandwidthUpBits} | 󰶡{bandwidthDownBits}",
-    "format-linked": "󰈁 {ifname} connected",
-    "format-disconnected": "󰈂 no ethernet",
-    "tooltip-format-ethernet": "Ethernet connection: {ifname}@{ipaddr}",
+    "tooltip": true,
+    "tooltip-format-disabled": "Network devices are turned OFF or not available",
+    "tooltip-format-disconnected":"Network device is ON but disconnected or unplugged",
+    "tooltip-format-ethernet": "Ethernet device: {ifname}\nIP address: {ipaddr}\nGateway: {gwaddr}",
+    "tooltip-format-wifi": "WiFi device: {ifname}\nWiFi connection: {essid} @ {frequency}GHz with signal level {signalStrength}%\nIP address: {ipaddr}\nGateway: {gwaddr}",
     "on-click": "kitty --class waybarmodule -e nmtui-connect",
     "on-click-right": "nm-connection-editor"
   },
