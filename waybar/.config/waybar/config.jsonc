@@ -36,11 +36,15 @@
   "custom/ghub": {
     "exec": "~/.config/waybar/scripts/waybar-ghub-handler.py",
     "return-type": "json",
+    "on-scroll-up": "~/.config/waybar/scripts/waybar-ghub-handler.py --prev",
+    "on-scroll-down": "~/.config/waybar/scripts/waybar-ghub-handler.py --next",
+    "exec-on-event": true,
     "interval": 60,
-    "format": "{icon}  {text}",
-    "format-icons": ["󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
+    "format": "{text} ({icon} {percentage}%)",
+    "format-alt": "{alt} ({icon} {percentage}%)",
+    "format-icons": ["󰂑","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
     "tooltip": true,
-    "on-click": "solaar"
+    "on-click-right": "solaar 2>/dev/null"
  },
 
   "network": {
@@ -74,10 +78,11 @@
     "format-disabled": "󰂲 {status}",
     "format-on": "󰂯 {status}",
     "format-connected": " [{num_connections}]:{device_alias}",
-    "format-connected-battery": " [{num_connections}]:{device_alias} (󰥈 {device_battery_percentage}%)",
+    "format-connected-battery": " [{num_connections}]:{device_alias} ({icon} {device_battery_percentage}%)",
+    "format-icons": ["󰥊","󰤾","󰤿","󰥀","󰥁","󰥂","󰥃","󰥄","󰥅","󰥆","󰥈"],
     "tooltip": "true",
     "tooltip-format-enumerate-connected": "{device_alias}",
-    "tooltip-format-enumerate-connected-battery": "{device_alias} (󰥈 {device_battery_percentage}%)",
+    "tooltip-format-enumerate-connected-battery": "{device_alias} ({icon} {device_battery_percentage}%)",
     "tooltip-format-connected": "{device_enumerate}",
     "on-click": "blueman-manager"
   },

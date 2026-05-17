@@ -1,4 +1,4 @@
-@import "mocha.css"; 
+@import "mocha.css";
 
 * {
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font";
@@ -76,6 +76,13 @@ button:hover {
   border-top: 2px solid @lavender;
 }
 
+#custom-ghub {
+  background-image: url('file:///home/astronaut/dotfiles/waybar/.config/waybar/scripts/logitech-g-logo.svg');
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-position: 6px center;
+  padding-left: 26px;
+}
 #custom-ghub.discharging {
   color: @sky;
   border-bottom: 2px solid @sky;
@@ -85,6 +92,11 @@ button:hover {
   color: @green;
   border-bottom: 2px solid @green;
   border-top: 2px solid @green;
+}
+#custom-ghub.notavailable {
+  color: @text;
+  border-bottom: 2px solid @text;
+  border-top: 2px solid @text;
 }
 
 #network.wifi {
