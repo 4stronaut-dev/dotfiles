@@ -3,7 +3,11 @@
   "output": "",
   "modules-left": ["hyprland/workspaces"],
   "modules-center": ["clock"],
-  "modules-right": ["custom/ghub","network","bluetooth","pulseaudio"],
+  "modules-right": ["group/ghub","network","bluetooth","pulseaudio"],
+  "group/ghub": {
+    "orientation": "horizontal",
+    "modules": ["custom/ghub-main", "custom/ghub-battery"]
+  },
 
   "clock": {
     "interval": 1,
@@ -33,19 +37,30 @@
     }
   },
   
-  "custom/ghub": {
-    "exec": "~/.config/waybar/scripts/waybar-ghub-handler.py",
+  "custom/ghub-main": {
+    "exec": "~/.config/waybar/scripts/waybar-ghub-solaar.py",
     "return-type": "json",
-    "on-scroll-up": "~/.config/waybar/scripts/waybar-ghub-handler.py --prev",
-    "on-scroll-down": "~/.config/waybar/scripts/waybar-ghub-handler.py --next",
+    "on-scroll-up": "~/.config/waybar/scripts/waybar-ghub-solaar.py --prev",
+    "on-scroll-down": "~/.config/waybar/scripts/waybar-ghub-solaar.py --next",
     "exec-on-event": true,
+    "exec-if": true,
     "interval": 60,
-    "format": "{text} ({icon} {percentage}%)",
-    "format-alt": "{alt} ({icon} {percentage}%)",
-    "format-icons": ["󰂑","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
+    "format": "{text}",
+    "format-alt": "{alt}",
     "tooltip": true,
     "on-click-right": "solaar 2>/dev/null"
- },
+  },
+  "custom/ghub-battery": {
+    "exec": "~/.config/waybar/scripts/waybar-ghub-solaar.py",
+    "return-type": "json",
+    "exec-on-evet": true,
+    "interval": 60,
+    "hide-empty-text": true,
+    "format": " ({icon} {percentage}%)",
+    "format-alt": " ({icon} {percentage}%)",
+    "format-icons": ["󱉝","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
+    "tooltip": false,
+  },
 
   "network": {
     "interval": 2,

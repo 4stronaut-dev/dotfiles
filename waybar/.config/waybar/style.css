@@ -55,14 +55,18 @@ button:hover {
   background-color: @red;
 }
 
+@keyframes blink {
+  0% { color: @green; }
+  50% { color: transparent; }
+  100% { color: @green; }
+}
 
-#clock:hover, #custom-ghub:hover, #network:hover, #bluetooth:hover, #pulseaudio:hover {
+#clock:hover, #ghub:hover, #network:hover, #bluetooth:hover, #pulseaudio:hover {
   background-color: @surface0;
   border-radius: 14px;
 }
 
-
-#clock, #custom-ghub, #network, #bluetooth, #pulseaudio {
+#clock, #ghub, #network, #bluetooth, #pulseaudio {
   background: transparent;
   transition: all 0.3s ease;
   padding: 2px 12px;
@@ -76,27 +80,25 @@ button:hover {
   border-top: 2px solid @lavender;
 }
 
-#custom-ghub {
+
+#ghub {
   background-image: url('file:///home/astronaut/dotfiles/waybar/.config/waybar/scripts/logitech-g-logo.svg');
   background-size: 16px 16px;
   background-repeat: no-repeat;
   background-position: 6px center;
   padding-left: 26px;
-}
-#custom-ghub.discharging {
   color: @sky;
   border-bottom: 2px solid @sky;
   border-top: 2px solid @sky;
 }
-#custom-ghub.charging {
-  color: @green;
-  border-bottom: 2px solid @green;
-  border-top: 2px solid @green;
-}
-#custom-ghub.notavailable {
+#ghub.no-battery {
   color: @text;
   border-bottom: 2px solid @text;
   border-top: 2px solid @text;
+}
+#custom-ghub-battery.recharging {
+  transition: none;
+  animation: blink 1s infinite;
 }
 
 #network.wifi {
