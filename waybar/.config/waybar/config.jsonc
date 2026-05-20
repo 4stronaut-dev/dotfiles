@@ -5,6 +5,7 @@
   "modules-center": ["clock"],
   "modules-right": ["group/ghub","network","bluetooth","pulseaudio"],
   "group/ghub": {
+    "id": "ghub",
     "orientation": "horizontal",
     "modules": ["custom/ghub-main", "custom/ghub-battery"]
   },
@@ -38,33 +39,33 @@
   },
   
   "custom/ghub-main": {
+    "max-length": 30,
     "exec": "~/.config/waybar/scripts/waybar-ghub-solaar.py",
-    "return-type": "json",
     "on-scroll-up": "~/.config/waybar/scripts/waybar-ghub-solaar.py --prev",
     "on-scroll-down": "~/.config/waybar/scripts/waybar-ghub-solaar.py --next",
-    "exec-on-event": true,
-    "exec-if": true,
-    "interval": 60,
+    "return-type": "json",
+    "exec-on-event": false,
+    "interval": 30,
+    "signal":7,
     "format": "{text}",
     "format-alt": "{alt}",
     "tooltip": true,
     "on-click-right": "solaar 2>/dev/null"
   },
   "custom/ghub-battery": {
-    "exec": "~/.config/waybar/scripts/waybar-ghub-solaar.py",
+    "exec": "~/.config/waybar/scripts/waybar-ghub-solaar.py --battery",
     "return-type": "json",
-    "exec-on-evet": true,
-    "interval": 60,
+    "interval": "once",
+    "signal": 8,
     "hide-empty-text": true,
-    "format": " ({icon} {percentage}%)",
-    "format-alt": " ({icon} {percentage}%)",
+    "format": "({icon} {percentage}%)",
     "format-icons": ["󱉝","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
     "tooltip": false,
   },
 
   "network": {
-    "interval": 2,
     "max-length": 25,
+    "interval": 2,
     "format-disabled": "{icon} disabled",
     "format-disconnected": "{icon} disconnected",
     "format-linked": "{icon} {ifname} is getting IP",
@@ -87,13 +88,13 @@
   },
 
   "bluetooth": {
-    "max-length": "16",
+    "max-length": 25,
     "format-device-preference": ["WH-1000XM5","Xbox Wireless Controller","HUAWEI P30 Pro 4stronaut"],
     "format-off": "󰂲 {status}",
     "format-disabled": "󰂲 {status}",
     "format-on": "󰂯 {status}",
     "format-connected": " [{num_connections}]:{device_alias}",
-    "format-connected-battery": " [{num_connections}]:{device_alias} ({icon} {device_battery_percentage}%)",
+    "format-connected-battery": " [{num_connections}]:({icon} {device_battery_percentage}%) {device_alias}",
     "format-icons": ["󰥊","󰤾","󰤿","󰥀","󰥁","󰥂","󰥃","󰥄","󰥅","󰥆","󰥈"],
     "tooltip": "true",
     "tooltip-format-enumerate-connected": "{device_alias}",

@@ -5,6 +5,8 @@ import json
 import sys
 import argparse
 import os
+import time
+import logging
 from enum import StrEnum
 from pathlib import Path
 
@@ -107,7 +109,7 @@ class FID(StrEnum):
     # 0x8110 Mouse Button Filter
 
 # Mapping custom icons to possible device types based on Logitech HID++2.0 protocol
-type_icon_map = {
+TYPE_ICON_MAP = {
     'keyboard': '',    # 0x01: keyboard
     'mouse': '',   # 0x02: mouse
     'numpad': '⌨',   # 0x03: numpad
@@ -132,7 +134,7 @@ type_icon_map = {
 
 # Mapping the FID to how many lines need to be extracted after FID occurence from 'solaar show' output
 # HINT: run solaar show in a terminal first to check the number of needed extracted lines per FID
-fid_to_extractedlinesnum_map = {
+FID_EXTRACTEDLINES_MAP = {
     FID.ROOT.value : 0,
     FID.DEVICE_NAME.value : 2,
     FID.UNIFIED_BATTERY.value : 1,
@@ -144,21 +146,13 @@ fid_to_extractedlinesnum_map = {
     FID.ONBOARD_PROFILES.value : 3
 }
 
-# Start
-try:
-    # Check the input arguments for --next or --prev and handle device index storage
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--prev', action='store_true')
-    parser.add_argument('--next', action='store_true')
-    args = parser.parse_args()
-    index_file = Path(__file__).parent / 'ghub-device-index'
-    if os.path.exists(index_file):
-        with open(index_file, 'r') as f:
-            device_index = int(f.read().strip())
-    else:
-        device_index = 0
+# Global definition of data file handler
+DATA_FILE = Path(__file__).parent / 'ghub-devices.json'
+# Global definition of allowed data age in seconds
+DEVICELIST_AGE_LIMIT = 30
 
-    # Run 'solaar show' and capture output
+def extract_solaar_output():
+    # run 'solaar show' and capture output
     call = subprocess.run(
         ['solaar', 'show'],
         text=True,
@@ -166,59 +160,44 @@ try:
         stdout=subprocess.PIPE,
     )
     out = call.stdout.strip().splitlines()
-
-    # Extract feature data from solaar output for all detected devices
-    # initialize device list. Srtucture of the list will be like this:
+    # initialize device list. Srtucture of a device in the list will be like this:
     # [{'Name': '','Kind': '', 'Features': []},..]
     devices = []
     # iteratae through the enumareated list of solaar output, i is needed to directly address lines
     for i, line in enumerate(out):
         # iterate through the FID-extracted lines mapping 
-        for fid, n in fid_to_extractedlinesnum_map.items():
+        for fid, n in FID_EXTRACTEDLINES_MAP.items():
             # check matching FID in the given line
             if fid in line and i + n < len(out):
                 if fid == FID.ROOT.value:
-                    # If FID_ROOT is founded, the list is appended by a new device dictionary
+                    # if FID_ROOT is founded, the list is appended by a new device dictionary
                     devices.append({})
                 elif fid == FID.DEVICE_NAME.value:
+                    # if DEVICE_NAME FID is found extend the structure with initial empty Features list 
                     next_lines = out[i+1:i+1+n]
                     key_value_pairs = (l.strip().split(':', 1) for l in next_lines)
                     device_data = {k.strip(): v.strip() for k, v in key_value_pairs}
                     device_data.update({'Features':[]})
                     devices[-1].update(device_data)
                 else:
+                    # add predefined number of lines for each FID in Features list
                     next_lines = out[i:i+1+n]
                     next_lines[0] = f'{fid}: {FID(fid).name}'
                     key_value_pairs = (l.strip().split(':',1) for l in next_lines)
                     device_data = {k.strip(): v.strip() for k, v in key_value_pairs}
                     devices[-1]['Features'].extend([device_data])
                 break
+    return devices
 
-    if args.prev:
-        device_index = (device_index - 1) % len(devices)
-    elif args.next:
-        device_index = (device_index + 1) % len(devices)
-
-    with open(index_file, 'w') as f:
-        f.write(str(device_index))
-    
-    # Convert the extracted info to the specific JSON required by waybar
-    # Initialize data for waybar 
-    waybar_input = {
-        'text': '',
-        'alt': '',
-        'tooltip': '',
-        'class': 'no-battery',
-        'percentage': 0
-    }
-    # Generating tooltip description
+def generate_tooltip(devices):
+    # generating tooltip description
     tooltip = '(left click) - switch to short format\t(right click) - open solaar\n'
     tooltip += '(scroll up/down) - show previous/next device(takes few secs)\n'
     tooltip += '------------------------------------------------------------------------------\n'
     tooltip += f'Number of connected Logitech HID++2.0 devices: {len(devices)}.\n'
     tooltip += 'List of connected devices and their features:\n'
     for device in devices:
-        tooltip += f'\n{type_icon_map[device['Kind']]}: {device['Name']}\n'
+        tooltip += f'\n{TYPE_ICON_MAP[device['Kind']]}: {device['Name']}\n'
         tooltip += 'Features:\n'
         for feature in device['Features']:
             for i in range(len(feature)):
@@ -226,19 +205,145 @@ try:
                     tooltip += f'\t{list(feature.values())[0]}\n'
                 else:
                     tooltip += f'\t\t{list(feature.keys())[i]}: {list(feature.values())[i]}\n'
+    return tooltip
 
-    waybar_input['tooltip'] = tooltip
-    waybar_input['text'] = f'{devices[device_index]['Name']}'
-    waybar_input['alt'] = f'{type_icon_map[devices[device_index]['Kind']]}'
-    device_with_battery = next((d for d in devices[device_index]['Features'] if FID.UNIFIED_BATTERY.value in d), None)
-    if device_with_battery:
-        waybar_input['percentage'] = int(device_with_battery['Battery'].split(',')[0].rstrip('%'))
-        waybar_input['class'] = device_with_battery['Battery'].split(',')[1].split('.')[1].lower()
+def get_battery(device):
+    # check if the device has the UNUFIED_BATTERY feature and get the status and percentage values
+    battery_feature = next((f for f in device['Features'] if FID.UNIFIED_BATTERY.value in f), None)
+    if battery_feature:
+        status = battery_feature['Battery'].split(',')[1].split('.')[1].lower()
+        percentage = int(battery_feature['Battery'].split(',')[0].rstrip('%'))
+    else:
+        status = 'no-battery'
+        percentage = 0
+    return {'class': status, 'percentage': percentage}
 
-    # Immediate print data for waybar
-    print(json.dumps(waybar_input))
+def get_dpi(device):
+    dpi_feature = next((f for f in device['Features'] if FID.ADJUSTABLE_DPI.value in f), None)
+    if dpi_feature:
+        dpi = f'{dpi_feature['Sensitivity (DPI) (saved)']}dpi'
+    else:
+        dpi = ''
+    return dpi
+
+def get_report_rate(device):
+    report_rate_feature = next((f for f in device['Features'] if FID.ADJUSTABLE_REPORT_RATE.value in f), None)
+    if report_rate_feature:
+        report_rate = report_rate_feature['Report Rate (saved)']
+    else:
+        report_rate = ''
+    return report_rate
+
+def load_data():
+    # load JSON serialized data from the defined data file
+    default = {'devicelist': None, 'index': 0, 'timestamp':None}
+    try:
+        with open(DATA_FILE, 'r') as file:
+            data = json.load(file)
+        if data and 'devicelist' in data and 'index' in data and 'timestamp' in data:
+            return data
+        else:
+            return default
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        logging.error(f'Data loading error from file {DATA_FILE}: {e}')
+        return default
+
+def save_data(data):
+    # store the data via JSON serialization into the defined data file
+    try:
+        with open(DATA_FILE, 'w') as file:
+            json.dump(data, file, indent=2)
+        logging.info(f'Data successfully saved to {DATA_FILE}')
+    except (IOError, OSError) as e:
+        logging.error(f'Error writing to file {DATA_FILE}: {e}')
+        return False
+    except TypeError as e:
+        logging.error(f'JSON serialization type or format error: {e}')
+        return False
+    return True
+
+
+def main():
+    # Initialize argument parser object and create it
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--prev', action='store_true')
+    parser.add_argument('--next', action='store_true')
+    parser.add_argument('--battery', action='store_true')
+    args = parser.parse_args()
+    
+    # Initialize variables 
+    data = load_data()
+    device_index = data['index']
+    device_num = len(data['devicelist'])
+
+    if device_num > 1 and (args.prev or args.next):
+        # update the device selector accoring to arguments
+        if args.prev:
+            device_index = (device_index - 1) % device_num
+        elif args.next:
+            device_index = (device_index + 1) % device_num
+        # store updated device selector
+        data['index'] = device_index
+        if save_data(data):
+            # trigger script re-running to use the new device selector
+            subprocess.run(['pkill', '-RTMIN+7', 'waybar'])
+        return
+    elif args.battery:
+        # handle battery call asrgument to check any battry related feature for the device
+        device = data['devicelist'][device_index]
+        battery = get_battery(device)
+        # create output for the battery waybar ghub module to display
+        output = {
+            'text': '' if battery['class'] in ['no-battery', 'no-device'] else 'dummy',
+            'alt': '',
+            'tooltip': '',
+            'class': battery['class'],
+            'percentage': battery['percentage']
+        }
+    else:
+        # Core part of main()
+        # use device list from loaded data if not outdated or grab the list from Solaar's output
+        if data['timestamp'] and (time.time() - data['timestamp'] < DEVICELIST_AGE_LIMIT):
+            devices = data['devicelist']
+        else:
+            # collect device list and all data from solaar's output and handle missing data
+            devices = extract_solaar_output()
+            if not devices:
+                output = {
+                    'text':f'device: {TYPE_ICON_MAP['unknown']}',
+                    'alt':'',
+                    'tooltip':'No device detected.',
+                    'class':'no-device',
+                    'percentage':0
+                }
+                print(json.dumps(output))
+                sys.stdout.flush()
+                return
+            else:
+                # Udpate stored date and save it
+                data['devicelist'] = devices
+                data['timestamp'] = time.time()
+                if not save_data(data):
+                    raise Exception('Device list save error!')
+        # create output for the main ghub module to display
+        device = devices[device_index]
+        output = {
+            'text': f'{device['Name']} {TYPE_ICON_MAP[device['Kind']]} {get_dpi(device)} {get_report_rate(device)}',
+            'alt': f'{TYPE_ICON_MAP[device['Kind']]} {get_dpi(device)} {get_report_rate(device)}',
+            'tooltip': generate_tooltip(devices),
+            'class': get_battery(device)['class'],
+            'percentage': None
+        }
+        # trigger the update of the battery module
+        subprocess.run(['pkill', '-RTMIN+8', 'waybar'])
+    # actually printig the module data for waybar
+    print(json.dumps(output))
     sys.stdout.flush()
 
-except Exception as e:
-    print(json.dumps({'text': 'G-Hub error', 'tooltip': str(e), 'class': 'notavailable'}))
+# Entry
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print(json.dumps({'text': 'G-Hub error', 'tooltip': str(e), 'class': 'no-device','percentage': 0}))
 
