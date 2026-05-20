@@ -1,13 +1,17 @@
 {
   "position": "top",
   "output": "",
-  "modules-left": ["hyprland/workspaces"],
+  "modules-left": ["hyprland/workspaces", "group/sysmon"],
   "modules-center": ["clock"],
-  "modules-right": ["group/ghub","network","bluetooth","pulseaudio"],
-  "group/ghub": {
+  "modules-right": [/*"group/ghub",*/"network","bluetooth","pulseaudio","upower"],
+/*  "group/ghub": {
     "id": "ghub",
     "orientation": "horizontal",
     "modules": ["custom/ghub-main", "custom/ghub-battery"]
+  },*/
+  "group/sysmon":{
+    "orientation": "horizontal",
+    "modules": ["cpu", "temperature#cpu", "memory", "custom/gpu", "temperature#gpu"]
   },
 
   "clock": {
@@ -38,14 +42,14 @@
     }
   },
   
-  "custom/ghub-main": {
+/*  "custom/ghub-main": {
     "max-length": 30,
     "exec": "~/.config/waybar/scripts/waybar-ghub-solaar.py",
     "on-scroll-up": "~/.config/waybar/scripts/waybar-ghub-solaar.py --prev",
     "on-scroll-down": "~/.config/waybar/scripts/waybar-ghub-solaar.py --next",
     "return-type": "json",
     "exec-on-event": false,
-    "interval": 30,
+    "interval": 60,
     "signal":7,
     "format": "{text}",
     "format-alt": "{alt}",
@@ -58,9 +62,37 @@
     "interval": "once",
     "signal": 8,
     "hide-empty-text": true,
-    "format": "({icon} {percentage}%)",
+    "format": " ({icon}{percentage}%)",
     "format-icons": ["󱉝","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
     "tooltip": false,
+  }, */
+
+  "cpu": {
+    "interval": 5,
+    "format": " {icon} 󰓅 {avg_frequency}Ghz",
+    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+  },
+  "temperature#cpu": {
+    "interval": 5,
+    "hwmon-path": "/sys/class/hwmon/hwmon4/temp1_input",
+    "format": " {icon}{temperatureC}℃",
+    "format-icons": ["","","","",""]
+  },
+  "memory": {
+    "interval": 5,
+    "format": " {percentage}%",
+    "tooltip-format": "\tUsed\t\tTotal\nMemory:\t{used}G\t/\t{total}G\nSwap:\t{swapUsed}G\t/\t{swapTotal}G"
+  },
+  "custom/gpu": {
+    "interval": 5,
+    "exec": "cat /sys/class/hwmon/hwmon2/device/gpu_busy_percent",
+    "format": "󰨇 {}%",
+  },
+  "temperature#gpu": {
+    "interval": 5,
+    "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
+    "format": " {icon}{temperatureC}℃",
+    "format-icons": ["","","","",""]
   },
 
   "network": {
@@ -110,5 +142,18 @@
       "default": ["󰕿", "", ""]
     },
     "on-click": "pavucontrol"
+  },
+
+  "upower": {
+    "native-path": "hidpp_battery_2",
+    "format": " {percentage}",
+    "tooltip": true,
+    "tooltip-padding": 2,
+    "tooltip-spacing": 12,
+    "hide-if-empty": true,
+    "show-icon": true,
+    "icon-size": 15,
+    "on-click": "solaar 2>/dev/null"
   }
+
 }
