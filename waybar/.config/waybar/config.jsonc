@@ -145,7 +145,7 @@
   },
 
   "upower": {
-    "native-path": "hidpp_battery_2",
+    "model": "Logitech PRO X",
     "format": " {percentage}",
     "tooltip": true,
     "tooltip-padding": 2,
