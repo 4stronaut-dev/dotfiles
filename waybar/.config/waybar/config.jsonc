@@ -3,21 +3,21 @@
   "output": "",
   "modules-left": ["hyprland/workspaces", "group/sysmon"],
   "modules-center": ["clock"],
-  "modules-right": [/*"group/ghub",*/"network","bluetooth","pulseaudio","upower"],
+  "modules-right": [/*"group/ghub",*/"upower","network","bluetooth","pulseaudio"],
 /*  "group/ghub": {
     "id": "ghub",
     "orientation": "horizontal",
     "modules": ["custom/ghub-main", "custom/ghub-battery"]
-  },*/
+  }, */
   "group/sysmon":{
     "orientation": "horizontal",
-    "modules": ["cpu", "temperature#cpu", "memory", "custom/gpu", "temperature#gpu"]
+    "modules": ["cpu", "temperature#cpu", "memory", "custom/gpu", "temperature#gpu","custom/gpu-mem"]
   },
 
   "clock": {
     "interval": 1,
     "format-alt": "{:%T}",
-    "format": "{:%T | %Y %b %d, %a}",
+    "format": "{:%T - %Y %b %d, %a}",
     "tooltip-format": "<tt>{calendar}</tt>",
     "calendar": {
       "iso8601": true,
@@ -65,7 +65,7 @@
     "format": " ({icon}{percentage}%)",
     "format-icons": ["󱉝","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
     "tooltip": false,
-  }, */
+  },*/
 
   "cpu": {
     "interval": 5,
@@ -93,6 +93,11 @@
     "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
     "format": " {icon}{temperatureC}℃",
     "format-icons": ["","","","",""]
+  },
+  "custom/gpu-mem": {
+    "interval": 5,
+    "exec": "awk '{printf \"%.2f GB\", $1/1000/1000/1000}' /sys/class/hwmon/hwmon2/device/mem_info_vram_used",
+    "format": " 󰍛 {}"
   },
 
   "network": {
@@ -146,7 +151,7 @@
 
   "upower": {
     "model": "Logitech PRO X",
-    "format": " {percentage}",
+    "format": " {percentage} ",
     "tooltip": true,
     "tooltip-padding": 2,
     "tooltip-spacing": 12,

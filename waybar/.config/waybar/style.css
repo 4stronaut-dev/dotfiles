@@ -61,12 +61,12 @@ button:hover {
   100% { color: @green; }
 }
 
-#clock:hover, /*#ghub:hover,*/ #sysmon:hover, #network:hover, #bluetooth:hover, #pulseaudio:hover, #upower:hover {
+#sysmon:hover, clock:hover, /*#ghub:hover,*/#upower:hover, #network:hover, #bluetooth:hover, #pulseaudio:hover {
   background-color: @surface0;
   border-radius: 14px;
 }
 
-#clock, /*#ghub,*/ #sysmon, #network, #bluetooth, #pulseaudio, #upower {
+#sysmon, #clock, /*#ghub,*/#upower, #network, #bluetooth, #pulseaudio {
   background: transparent;
   transition: all 0.3s ease;
   padding: 2px 12px;
@@ -74,12 +74,27 @@ button:hover {
   border-radius: 8px;
 }
 
+#sysmon {
+  color: @subtext0;
+  border-bottom: 2px solid @subtext0;
+  border-top: 2px solid @subtext0;
+}
+#memory {
+  padding-left: 6px;
+  margin-left: 6px;
+  border-left: 1px solid @subtext0;
+}
+#custom-gpu {
+  padding-left: 6px;
+  margin-left: 6px;
+  border-left: 1px solid @subtext0;
+}
+
 #clock {
   color: @lavender;
   border-bottom: 2px solid @lavender;
   border-top: 2px solid @lavender;
 }
-
 
 /*#ghub {
   background-image: url('file:///home/astronaut/dotfiles/waybar/.config/waybar/scripts/logitech-g-logo.svg');
@@ -103,22 +118,12 @@ button:hover {
 }
 #custom-ghub-battery.full {
   color: @green
-}*/
+} */
 
-#sysmon {
-  color: @subtext0;
-  border-bottom: 2px solid @subtext0;
-  border-top: 2px solid @subtext0;
-}
-#memory {
-  padding-left: 6px;
-  margin-left: 6px;
-  border-left: 1px solid @subtext0;
-}
-#custom-gpu {
-  padding-left: 6px;
-  margin-left: 6px;
-  border-left: 1px solid @subtext0;
+#upower {
+  color: @yellow;
+  border-bottom: 2px solid @yellow;
+  border-top: 2px solid @yellow;
 }
 
 #network.wifi {
@@ -157,12 +162,6 @@ button:hover {
   color: @teal;
   border-bottom: 2px solid @teal;
   border-top: 2px solid @teal;
-}
-
-#upower {
-  color: @yellow;
-  border-bottom: 2px solid @yellow;
-  border-top: 2px solid @yellow;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
