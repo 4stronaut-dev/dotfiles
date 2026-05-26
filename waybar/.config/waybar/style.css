@@ -121,9 +121,14 @@ button:hover {
 } */
 
 #upower {
-  color: @yellow;
-  border-bottom: 2px solid @yellow;
-  border-top: 2px solid @yellow;
+  background-image: url('file:///home/astronaut/dotfiles/waybar/.config/waybar/scripts/logitech-g-logo.svg');
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-position: 6px center;
+  padding-left: 26px;
+  color: @sky;
+  border-bottom: 2px solid @sky;
+  border-top: 2px solid @sky;
 }
 
 #network.wifi {
