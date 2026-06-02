@@ -1,7 +1,7 @@
 {
   "position": "top",
   "output": "",
-  "modules-left": ["hyprland/workspaces", "group/sysmon"],
+  "modules-left": ["hyprland/workspaces", "group/sysmon","group/keyboard"],
   "modules-center": ["clock"],
   "modules-right": [/*"group/ghub",*/"upower","network","bluetooth","pulseaudio"],
 /*  "group/ghub": {
@@ -13,60 +13,6 @@
     "orientation": "horizontal",
     "modules": ["cpu", "temperature#cpu", "memory", "custom/gpu", "temperature#gpu","custom/gpu-mem"]
   },
-
-  "clock": {
-    "interval": 1,
-    "format-alt": "{:%T}",
-    "format": "{:%T - %Y %b %d, %a}",
-    "tooltip-format": "<tt>{calendar}</tt>",
-    "calendar": {
-      "iso8601": true,
-      "mode"          : "year",
-      "mode-mon-col"  : 4,
-      "weeks-pos"     : "left",
-      "on-scroll"     : 1,
-      "format": {
-        "months":     "<span color='#ffead3'><b>{}</b></span>",
-        "days":       "<span color='#ecc6d9'><b>{}</b></span>",
-        "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
-        "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
-        "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
-      }
-    },
-    "actions":  {
-      "on-click-right": "mode",
-      "on-scroll-up": "tz_up",
-      "on-scroll-down": "tz_down",
-      "on-scroll-up": "shift_up",
-      "on-scroll-down": "shift_down"
-    }
-  },
-  
-/*  "custom/ghub-main": {
-    "max-length": 30,
-    "exec": "~/.config/waybar/scripts/waybar-ghub-solaar.py",
-    "on-scroll-up": "~/.config/waybar/scripts/waybar-ghub-solaar.py --prev",
-    "on-scroll-down": "~/.config/waybar/scripts/waybar-ghub-solaar.py --next",
-    "return-type": "json",
-    "exec-on-event": false,
-    "interval": 60,
-    "signal":7,
-    "format": "{text}",
-    "format-alt": "{alt}",
-    "tooltip": true,
-    "on-click-right": "solaar 2>/dev/null"
-  },
-  "custom/ghub-battery": {
-    "exec": "~/.config/waybar/scripts/waybar-ghub-solaar.py --battery",
-    "return-type": "json",
-    "interval": "once",
-    "signal": 8,
-    "hide-empty-text": true,
-    "format": " ({icon}{percentage}%)",
-    "format-icons": ["󱉝","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
-    "tooltip": false,
-  },*/
-
   "cpu": {
     "interval": 5,
     "format": " {icon} 󰓅 {avg_frequency}Ghz",
@@ -98,6 +44,92 @@
     "interval": 5,
     "exec": "awk '{printf \"%.2f GB\", $1/1000/1000/1000}' /sys/class/hwmon/hwmon2/device/mem_info_vram_used",
     "format": " 󰍛 {}"
+  },
+
+  "group/keyboard":{
+    "orientation": "horizontal",
+    "modules": ["hyprland/language","keyboard-state"]
+  },
+  "hyprland/language": {
+    "format": "{}",
+    "format-en": "US",
+    "format-hu": "HU",
+    "on-click": "hyprctl switchxkblayout all next"
+  },
+  "keyboard-state": {
+    "capslock": true,
+    "numlock": false,
+    "scrolllock": false,
+    "format": "{name} {icon} ",
+    "format-icons": {
+        "locked": "",
+        "unlocked": ""
+    }
+  },
+
+  "clock": {
+    "interval": 1,
+    "format-alt": "{:%T}",
+    "format": "{:%T - %Y %b %d, %a}",
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "iso8601": true,
+      "mode"          : "year",
+      "mode-mon-col"  : 4,
+      "weeks-pos"     : "left",
+      "on-scroll"     : 1,
+      "format": {
+        "months":     "<span color='#ffead3'><b>{}</b></span>",
+        "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+        "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    },
+    "actions":  {
+      "on-click-right": "mode",
+      "on-scroll-up": "tz_up",
+      "on-scroll-down": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  },
+
+/*  "custom/ghub-main": {
+    "max-length": 30,
+    "exec": "~/.config/waybar/scripts/waybar-ghub-solaar.py",
+    "on-scroll-up": "~/.config/waybar/scripts/waybar-ghub-solaar.py --prev",
+    "on-scroll-down": "~/.config/waybar/scripts/waybar-ghub-solaar.py --next",
+    "return-type": "json",
+    "exec-on-event": false,
+    "interval": 60,
+    "signal":7,
+    "format": "{text}",
+    "format-alt": "{alt}",
+    "tooltip": true,
+    "on-click-right": "solaar 2>/dev/null"
+  },
+  "custom/ghub-battery": {
+    "exec": "~/.config/waybar/scripts/waybar-ghub-solaar.py --battery",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 8,
+    "hide-empty-text": true,
+    "format": " ({icon}{percentage}%)",
+    "format-icons": ["󱉝","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
+    "tooltip": false,
+  },*/
+
+  "upower": {
+    "model": "Logitech PRO X",
+    "format": " {percentage} ",
+    "tooltip": true,
+    "tooltip-padding": 2,
+    "tooltip-spacing": 12,
+    "hide-if-empty": true,
+    "show-icon": true,
+    "icon-size": 15,
+    "on-click": "solaar 2>/dev/null"
   },
 
   "network": {
@@ -147,18 +179,5 @@
       "default": ["󰕿", "", ""]
     },
     "on-click": "pavucontrol"
-  },
-
-  "upower": {
-    "model": "Logitech PRO X",
-    "format": " {percentage} ",
-    "tooltip": true,
-    "tooltip-padding": 2,
-    "tooltip-spacing": 12,
-    "hide-if-empty": true,
-    "show-icon": true,
-    "icon-size": 15,
-    "on-click": "solaar 2>/dev/null"
   }
-
 }
