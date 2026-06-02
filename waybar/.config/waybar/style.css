@@ -1,7 +1,7 @@
 @import "mocha.css";
 
 * {
-  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font";
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Noto Color Emoji";
   font-size: 15px;
   min-height: 0;
   font-weight: bold;
@@ -61,12 +61,12 @@ button:hover {
   100% { color: @green; }
 }
 
-#sysmon:hover, #clock:hover, #keyboard:hover, /*#ghub:hover,*/#upower:hover, #network:hover, #bluetooth:hover, #pulseaudio:hover {
+#sysmon:hover, #clock:hover, #language:hover, /*#ghub:hover,*/#upower:hover, #network:hover, #bluetooth:hover, #pulseaudio:hover {
   background-color: @surface0;
   border-radius: 14px;
 }
 
-#sysmon, #clock, #keyboard, /*#ghub,*/#upower, #network, #bluetooth, #pulseaudio {
+#sysmon, #clock, #language, /*#ghub,*/#upower, #network, #bluetooth, #pulseaudio {
   background: transparent;
   transition: all 0.3s ease;
   padding: 2px 12px;
@@ -90,21 +90,16 @@ button:hover {
   border-left: 1px solid @subtext0;
 }
 
-#keyboard {
-  color: @yellow;
-  border-bottom: 2px solid @yellow;
-  border-top: 2px solid @yellow;
-}
-#keyboard-state {
-  padding-left: 6px;
-  margin-left: 6px;
-  border-left: 1px solid @yellow;
-}
-
 #clock {
   color: @lavender;
   border-bottom: 2px solid @lavender;
   border-top: 2px solid @lavender;
+}
+
+#language {
+  color: @yellow;
+  border-bottom: 2px solid @yellow;
+  border-top: 2px solid @yellow;
 }
 
 /*#ghub {

@@ -1,16 +1,17 @@
 {
   "position": "top",
+  "orientation": "horizontal",
   "output": "",
-  "modules-left": ["hyprland/workspaces", "group/sysmon","group/keyboard"],
+  "modules-left": ["hyprland/workspaces", "group/sysmon"],
   "modules-center": ["clock"],
-  "modules-right": [/*"group/ghub",*/"upower","network","bluetooth","pulseaudio"],
+  "modules-right": ["hyprland/language",/*"group/ghub",*/"upower","network","bluetooth","pulseaudio"],
 /*  "group/ghub": {
     "id": "ghub",
     "orientation": "horizontal",
     "modules": ["custom/ghub-main", "custom/ghub-battery"]
   }, */
   "group/sysmon":{
-    "orientation": "horizontal",
+    "orientation": "inherit",
     "modules": ["cpu", "temperature#cpu", "memory", "custom/gpu", "temperature#gpu","custom/gpu-mem"]
   },
   "cpu": {
@@ -46,27 +47,6 @@
     "format": " 󰍛 {}"
   },
 
-  "group/keyboard":{
-    "orientation": "horizontal",
-    "modules": ["hyprland/language","keyboard-state"]
-  },
-  "hyprland/language": {
-    "format": "{}",
-    "format-en": "US",
-    "format-hu": "HU",
-    "on-click": "hyprctl switchxkblayout all next"
-  },
-  "keyboard-state": {
-    "capslock": true,
-    "numlock": false,
-    "scrolllock": false,
-    "format": "{name} {icon} ",
-    "format-icons": {
-        "locked": "",
-        "unlocked": ""
-    }
-  },
-
   "clock": {
     "interval": 1,
     "format-alt": "{:%T}",
@@ -93,6 +73,13 @@
       "on-scroll-up": "shift_up",
       "on-scroll-down": "shift_down"
     }
+  },
+
+  "hyprland/language": {
+    "format": "{}",
+    "format-en": "  🇺🇸",
+    "format-hu": "  🇭🇺"
+    /*"on-click": "hyprctl switchxkblayout all next" */
   },
 
 /*  "custom/ghub-main": {
