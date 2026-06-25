@@ -266,6 +266,12 @@ hl.device({
 	sensitivity = -0.5,
 })
 
+hl.config({
+	cursor = {
+		no_warps = true,
+	},
+})
+
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
