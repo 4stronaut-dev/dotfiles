@@ -5,11 +5,18 @@
   "modules-left": ["hyprland/workspaces", "group/sysmon"],
   "modules-center": ["clock"],
   "modules-right": ["hyprland/language",/*"group/ghub",*/"upower","network","bluetooth","pulseaudio"],
+  
+  "hyprland/workspaces":{
+    "format": {},
+    "on-click": "activate"
+  },
+
 /*  "group/ghub": {
     "id": "ghub",
     "orientation": "horizontal",
     "modules": ["custom/ghub-main", "custom/ghub-battery"]
   }, */
+
   "group/sysmon":{
     "orientation": "inherit",
     "modules": ["cpu", "temperature#cpu", "memory", "custom/gpu", "temperature#gpu","custom/gpu-mem"]
@@ -17,7 +24,7 @@
   "cpu": {
     "interval": 5,
     "format": " {icon} 󰓅 {avg_frequency}Ghz",
-    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
   },
   "temperature#cpu": {
     "interval": 5,
