@@ -45,8 +45,8 @@ hl.monitor({
 hl.config({
 	render = {
 		--    cm_fs_passthrough = 0 # bypass wayland ColorManagement pipeline (0:off | 1:always ON for fullscreen apps | 2:ON only for HDR fullscreen apps)
-		cm_auto_hdr = 1, -- auto switch to HDR for fullscreen app (0:off | 1:on to HDR | 2:on to HDREDID)
-		--    direct_scanout = 1 # to improve performance by scanning out buffers directly when possible
+		cm_auto_hdr = 2, -- auto switch to HDR for fullscreen app (0:off | 1:on to HDR | 2:on to HDREDID)
+		direct_scanout = 0, -- change to 1, to improve performance by scanning out buffers directly when possible
 	},
 })
 
@@ -286,6 +286,7 @@ hl.bind(
 	mainMod .. " + M",
 	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
 )
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
