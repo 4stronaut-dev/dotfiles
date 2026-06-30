@@ -17,14 +17,14 @@ hl.monitor({
 	position = "1440x720",
 	scale = "1",
 	-- optional extra arguments - any order
-	vrr = 2,
-	bitdepth = 10, -- comment this out is a workaround for failing restore SDR after exiting a HDR fullscreen app
+	vrr = 3,
+	-- bitdepth = 10, -- comment this out is a workaround for failing restore SDR after exiting a HDR fullscreen app
 	cm = "auto",
 	supports_wide_color = 1,
 	supports_hdr = 1,
 	sdr_min_luminance = 0.005,
 	sdr_max_luminance = 250,
-	max_luminance = 950,
+	max_luminance = 1000,
 	max_avg_luminance = 400,
 })
 
@@ -45,7 +45,7 @@ hl.monitor({
 hl.config({
 	render = {
 		--    cm_fs_passthrough = 0 # bypass wayland ColorManagement pipeline (0:off | 1:always ON for fullscreen apps | 2:ON only for HDR fullscreen apps)
-		cm_auto_hdr = 2, -- auto switch to HDR for fullscreen app (0:off | 1:on to HDR | 2:on to HDREDID)
+		cm_auto_hdr = 1, -- auto switch to HDR for fullscreen app (0:off | 1:on to HDR | 2:on to HDREDID)
 		--    direct_scanout = 1 # to improve performance by scanning out buffers directly when possible
 	},
 })
@@ -101,7 +101,7 @@ hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 
 hl.env("EDITOR", "nvim")
-hl.env("WINEPREFIX", "$HOME/.wine")
+hl.env("WINEPREFIX", HOME .. "/.wine")
 hl.env("WINEARCH", "win64")
 hl.env("PROTON_ENABLE_WAYLAND", "1")
 hl.env("PROTON_ENABLE_HDR", "1")
@@ -109,7 +109,7 @@ hl.env("WAYLANDDRV_PRIMARY_MONITOR", "DP-1")
 hl.env("DXVK_HUD", "0")
 hl.env("DXVK_HDR", "1")
 
-hl.env("STEAM_COMPAT_CLIENT_INSTALL_PATH", '"$HOME/.steam/steam"')
+hl.env("STEAM_COMPAT_CLIENT_INSTALL_PATH", HOME .. "/.steam/steam")
 
 -----------------------
 ----- PERMISSIONS -----
@@ -217,11 +217,11 @@ hl.config({
 })
 
 -- See https://wiki.hypr.land/Configuring/Layouts/Scrolling-Layout/ for more
-hl.config({
-	scrolling = {
-		fullscreen_on_one_column = true,
-	},
-})
+-- hl.config({
+-- 	scrolling = {
+-- 		fullscreen_on_one_column = true,
+-- 	},
+-- })
 
 ----------------
 ----  MISC  ----
@@ -266,11 +266,11 @@ hl.device({
 	sensitivity = -0.5,
 })
 
-hl.config({
-	cursor = {
-		no_warps = true,
-	},
-})
+-- hl.config({
+-- 	cursor = {
+-- 		no_warps = true,
+-- 	},
+-- })
 
 ---------------------
 ---- KEYBINDINGS ----
@@ -302,11 +302,11 @@ hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
--- Move active window in the actual workspace
-hl.bind(mainMod .. " + ALT + left", hl.dsp.window.move({ direction = "l" }))
-hl.bind(mainMod .. " + ALT + down", hl.dsp.window.move({ direction = "d" }))
-hl.bind(mainMod .. " + ALT + up", hl.dsp.window.move({ direction = "u" }))
-hl.bind(mainMod .. " + ALT + right", hl.dsp.window.move({ direction = "r" }))
+-- Move active window in the actual workspaces
+hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.move({ direction = "l" }))
+hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.move({ direction = "d" }))
+hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "u" }))
+hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "r" }))
 -- Switch workspaces
 hl.bind(mainMod .. " + 1", hl.dsp.focus({ workspace = 1 }))
 hl.bind(mainMod .. " + 2", hl.dsp.focus({ workspace = 2 }))
@@ -339,32 +339,32 @@ hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag())
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize())
 -- Laptop multimedia keys for volume and LCD brightness
-hl.bind(
-	"XF86AudioRaiseVolume",
-	hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
-	{ locked = true, repeating = true }
-)
-hl.bind(
-	"XF86AudioLowerVolume",
-	hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
-	{ locked = true, repeating = true }
-)
-hl.bind(
-	"XF86AudioMute",
-	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
-	{ locked = true, repeating = true }
-)
-hl.bind(
-	"XF86AudioMicMute",
-	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
-	{ locked = true, repeating = true }
-)
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
-hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
+-- hl.bind(
+-- 	"XF86AudioRaiseVolume",
+-- 	hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
+-- 	{ locked = true, repeating = true }
+-- )
+-- hl.bind(
+-- 	"XF86AudioLowerVolume",
+-- 	hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
+-- 	{ locked = true, repeating = true }
+-- )
+-- hl.bind(
+-- 	"XF86AudioMute",
+-- 	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
+-- 	{ locked = true, repeating = true }
+-- )
+-- hl.bind(
+-- 	"XF86AudioMicMute",
+-- 	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
+-- 	{ locked = true, repeating = true }
+-- )
+-- hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
+-- hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
+-- hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
+-- hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+-- hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+-- hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
@@ -381,7 +381,7 @@ hl.workspace_rule({ workspace = "4", monitor = "DP-2" })
 hl.workspace_rule({ workspace = "5", monitor = "DP-2" })
 hl.workspace_rule({ workspace = "6", monitor = "DP-2" })
 
-hl.window_rule({
+local suppressMaximizeRule = hl.window_rule({
 	name = "suppress-maximize-events",
 	match = {
 		class = ".*",
@@ -416,7 +416,7 @@ hl.window_rule({
 hl.window_rule({
 	name = "start-steamapps-in-fullscreen",
 	match = {
-		initial_class = "^(steam_app_\\\\d+)$",
+		initial_class = "^(steam_app_\\d+)$",
 	},
 	fullscreen = true,
 })
