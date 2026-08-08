@@ -9,13 +9,13 @@
 ---- MONITORS ----
 ------------------
 
--- configuration of the main HDR gamer monitor
+-- Configuratoin of the main HDR gamer monitor
 hl.monitor({
 	-- base arguments - FIX order
 	output = "DP-1",
 	mode = "2560x1440@180",
 	position = "1440x720",
-	scale = "1",
+	scale = 1,
 	-- optional extra arguments - any order
 	vrr = 3,
 	-- bitdepth = 10, -- comment this out is a workaround for failing restore SDR after exiting a HDR fullscreen app
@@ -28,14 +28,15 @@ hl.monitor({
 	max_avg_luminance = 400,
 })
 
--- configuration of the secondary SDR monitor, vertical on the left of the main monitor
+-- Configuration of the secondary SDR monitor, vertical on the left of the main monitor
 hl.monitor({
 	-- base arguments - FIX order
 	output = "DP-2",
 	mode = "2560x1440@144",
 	position = "0x0",
-	scale = "1",
+	scale = 1,
 	-- optional extra arguments - any order
+	disabled = false,
 	transform = 3,
 	vrr = 0,
 	bitdepth = 8,
@@ -44,8 +45,8 @@ hl.monitor({
 
 hl.config({
 	render = {
-		--    cm_fs_passthrough = 0 # bypass wayland ColorManagement pipeline (0:off | 1:always ON for fullscreen apps | 2:ON only for HDR fullscreen apps)
-		cm_auto_hdr = 2, -- auto switch to HDR for fullscreen app (0:off | 1:on to HDR | 2:on to HDREDID)
+		-- cm_fs_passthrough = 0 # bypass wayland ColorManagement pipeline (0:off | 1:always ON for fullscreen apps | 2:ON only for HDR fullscreen apps)
+		cm_auto_hdr = 1, -- auto switch to HDR for fullscreen app (0:off | 1:on to HDR | 2:on to HDREDID)
 		direct_scanout = 0, -- change to 1, to improve performance by scanning out buffers directly when possible
 	},
 })
@@ -62,6 +63,7 @@ local browser = "brave --password-store=basic"
 local wallpaperChange = HOME .. "/.config/hypr/scripts/hyprpaper-change.sh"
 local wallpaperHandler = HOME .. "/.config/hypr/scripts/hyprpaper-handler.sh"
 local toggleHDR = HOME .. "/.config/hypr/scripts/toggle-hdr.sh"
+local toggleSecondaryMonitor = HOME .. "/.config/hypr/scripts/toggle-secondary-monitor.sh"
 
 -------------------
 ---- AUTOSTART ----
@@ -275,17 +277,19 @@ hl.device({
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
-
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.kill())
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(
-	mainMod .. " + M",
+	mainMod .. " + SHIFT + L",
 	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
 )
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd(toggleSecondaryMonitor))
+hl.bind(mainMod .. " + SHIFT + H", hl.dsp.exec_cmd(toggleHDR))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
@@ -295,9 +299,7 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd("hyprshot -m window"))
 hl.bind("PRINT", hl.dsp.exec_cmd("hyprshot -m output"))
 hl.bind(mainMod .. " + SHIFT + PRINT", hl.dsp.exec_cmd("hyprshot -m region"))
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(wallpaperChange))
-hl.bind(mainMod .. " + SHIFT + H", hl.dsp.exec_cmd(toggleHDR))
 -- Move focus
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
@@ -374,13 +376,13 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize())
 -- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
 -- and https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 
-hl.workspace_rule({ workspace = "1", monitor = "DP-1" })
-hl.workspace_rule({ workspace = "2", monitor = "DP-1" })
-hl.workspace_rule({ workspace = "3", monitor = "DP-1" })
-
-hl.workspace_rule({ workspace = "4", monitor = "DP-2" })
-hl.workspace_rule({ workspace = "5", monitor = "DP-2" })
-hl.workspace_rule({ workspace = "6", monitor = "DP-2" })
+-- hl.workspace_rule({ workspace = "1", monitor = "DP-1" })
+-- hl.workspace_rule({ workspace = "2", monitor = "DP-1" })
+-- hl.workspace_rule({ workspace = "3", monitor = "DP-1" })
+--
+-- hl.workspace_rule({ workspace = "4", monitor = "DP-2" })
+-- hl.workspace_rule({ workspace = "5", monitor = "DP-2" })
+-- hl.workspace_rule({ workspace = "6", monitor = "DP-2" })
 
 local suppressMaximizeRule = hl.window_rule({
 	name = "suppress-maximize-events",

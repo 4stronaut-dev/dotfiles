@@ -10,20 +10,32 @@ echo "Theme has been installed for sddm!"
 # Create directory for the hyprland config file
 sudo mkdir -p /var/lib/sddm/.config/hypr
 
-# Create hyprland configuration
-sudo tee /var/lib/sddm/.config/hypr/hyprland.conf >/dev/null <<'EOF'
-# Create dedicated Hyprland configuration for SDDM's environment
-# to handle monitor layout by wayland compositor
-monitor=DP-1, preferred, 1440x720, 1
-monitor=DP-2, preferred, 0x0, 1, transform, 3
+# Create hyprland configuration for SDDM
+sudo tee /var/lib/sddm/.config/hypr/hyprland.lua >/dev/null <<'EOF'
+hl.monitor({
+	output = "DP-1",
+	mode = "preferred",
+	position = "1440x720",
+	scale = "1",
+})
 
-misc {
-    force_default_wallpaper = 0
-    disable_hyprland_logo = true
-}
+hl.monitor({
+  output = "DP-2",
+  mode = "preferred",
+  position = "0x0",
+  scale = "1",
+  transform = 3,
+})
 
-workspace=1, monitor:DP-1
-workspace=2, monitor:DP-2
+hl.config({
+	misc = {
+		force_default_wallpaper = 0, -- Set to 0 or 1 to disable the anime mascot wallpapers
+		disable_hyprland_logo = true, -- If true disables the random hyprland logo / anime girl background. :(
+	},
+})
+
+hl.workspace_rule({ workspace = "1", monitor = "DP-1" })
+hl.workspace_rule({ workspace = "2", monitor = "DP-2" })
 EOF
 
 # Create SDDM config file to use wayland backend and apply the installed theme
