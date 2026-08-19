@@ -17,7 +17,7 @@ hl.monitor({
 	position = "1440x720",
 	scale = 1,
 	-- optional extra arguments - any order
-	vrr = 3,
+	vrr = 1,
 	-- bitdepth = 10, -- comment this out is a workaround for failing restore SDR after exiting a HDR fullscreen app
 	cm = "auto",
 	supports_wide_color = 1,
@@ -265,7 +265,7 @@ hl.gesture({
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Devices/ for more
 hl.device({
 	name = "epic-mouse-v1",
-	sensitivity = -0.5,
+	sensitivity = 0.0,
 })
 
 -- hl.config({

@@ -50,8 +50,8 @@
   },
   "custom/gpu-mem": {
     "interval": 5,
-    "exec": "awk '{printf \"%.2f GB\", $1/1000/1000/1000}' /sys/class/hwmon/hwmon2/device/mem_info_vram_used",
-    "format": " 󰍛 {}"
+    "exec": "awk '{printf \"%.2fGB\", $1/1000/1000/1000}' /sys/class/hwmon/hwmon2/device/mem_info_vram_used",
+    "format": "  {}"
   },
 
   "clock": {
