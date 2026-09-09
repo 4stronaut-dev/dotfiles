@@ -3,4 +3,4 @@
 # install hyprlock packages
 yay -S --needed --noconfirm hyprlock
 
-echo "Hyprlock has been installed!"
+echo "###> Hyprlock has been installed!"

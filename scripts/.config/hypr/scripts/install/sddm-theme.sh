@@ -3,7 +3,7 @@
 # install Sugar-Candy theme for sddm login manager
 yay -S --needed --noconfirm sddm sddm-theme-sugar-candy
 
-echo "Theme has been installed for sddm!"
+echo "###> Theme has been installed for sddm!"
 
 # Create hyperland config for SDDM's environment to handle monitor layout
 

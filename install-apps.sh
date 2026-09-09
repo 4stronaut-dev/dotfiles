@@ -9,12 +9,6 @@ for src in "$HOME"/dotfiles/scripts/.config/hypr/scripts/install/*.sh; do
   source "$src"
 done
 
-updatedb
-
-pacman -Syu --noconfirm
-
 "$HOME"/dotfiles/apply-dotfiles.sh
 
-gum confirm "Installation completed, reboot needed! NOTE: after reboot, \
-             run install-dotfiles.sh script! \
-             Apply REBOOT?" && reboot
+gum confirm "Installation completed, reboot needed! Apply REBOOT?" && reboot

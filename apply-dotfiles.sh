@@ -19,4 +19,4 @@ stow -v -R wofi
 stow -v -R yazi
 
 # Confirm successful linking
-echo "Customized configurations have been applied!"
+echo "###> Customized configurations have been applied!"

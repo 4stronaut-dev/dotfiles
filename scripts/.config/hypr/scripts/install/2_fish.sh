@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "###> Installing shell..."
+
 # install packages for fish shell
 yay -S --noconfirm --needed fish fastfetch
 
@@ -15,4 +17,4 @@ fi
 # make fish the default shell
 chsh -s "$FISH_PATH"
 
-echo "fish shell has been installed!"
+echo "###> fish shell has been installed, and set up as default shell."
