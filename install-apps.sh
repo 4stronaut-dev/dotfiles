@@ -9,9 +9,9 @@ for src in "$HOME"/dotfiles/scripts/.config/hypr/scripts/install/*.sh; do
   source "$src"
 done
 
-sudo updatedb
+updatedb
 
-sudo pacman -Syu --noconfirm
+pacman -Syu --noconfirm
 
 "$HOME"/dotfiles/apply-dotfiles.sh
 

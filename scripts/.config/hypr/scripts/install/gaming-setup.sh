@@ -2,7 +2,7 @@
 
 # Define the relevant configuration files
 PACMAN_CONF="/etc/pacman.conf"
-HYPR_CONF="$HOME/.config/hypr/hyprland.conf"
+HYPR_LUA="$HOME/.config/hypr/hyprland.lua"
 
 # Check if the file exist
 if [[ ! -f "$PACMAN_CONF" ]]; then
@@ -69,35 +69,44 @@ sudo udevadm control --reload-rules
 # Create necessary environment variables
 echo "Create necessary environment variables..."
 # Backup the original config (if not already backed up)
-if [[ ! -f "$HYPR_CONF.bak" ]]; then
-  cp "$HYPR_CONF" "$HYPR_CONF.bak"
-  echo "Backup created: $HYPR_CONF.bak"
+if [[ ! -f "$HYPR_LUA.bak" ]]; then
+  cp "$HYPR_LUA" "$HYPR_LUA.bak"
+  echo "Backup created: $HYPR_LUA.bak"
 fi
 
 # List of environment variables to add
 ENV_VARS=(
-  "env = QT_QPA_PLATFORM,wayland"
-  "env = QT_QPA_PLATFORMTHEME,qt6ct"
-  "env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-  "env = GDK_BACKEND,wayland,x11"
-  "env = SDL_VIDEODRIVER,wayland,x11"
-  "env = WLR_NO_HARDWARE_CURSORS,1"
-  "env = XDG_SESSION_TYPE,wayland"
-  "env = XDG_SESSION_DESKTOP,Hyprland"
-  "env = XDG_CURRENT_DESKTOP,Hyprland"
-  "env = WINEPREFIX,\$HOME/.wine"
-  "env = WINEARCH,win64"
-  "env = PROTON_ENABLE_WAYLAND,1"
-  "env = PROTON_ENABLE_HDR,1"
-  "env = WAYLANDDRV_PRIMARY_MONITOR,DP-1"
-  "env = DXVK_HUD,0"
-  "env = DXVK_HDR,1"
+  "hl.env("XCURSOR_SIZE", "24")
+hl.env("HYPRCURSOR_SIZE", "24")
+
+hl.env("QT_QPA_PLATFORM", "wayland")
+hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
+hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
+
+hl.env("GDK_BACKEND", "wayland")
+hl.env("SDL_VIDEODRIVER", "wayland")
+
+hl.env("WLR_NO_HARDWARE_CURSORS", "1")
+hl.env("XDG_SESSION_TYPE", "wayland")
+hl.env("XDG_SESSION_DESKTOP", "Hyprland")
+hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
+
+hl.env("EDITOR", "nvim")
+hl.env("WINEPREFIX", HOME .. "/.wine")
+hl.env("WINEARCH", "win64")
+hl.env("PROTON_ENABLE_WAYLAND", "1")
+hl.env("PROTON_ENABLE_HDR", "1")
+hl.env("WAYLANDDRV_PRIMARY_MONITOR", "DP-1")
+hl.env("DXVK_HUD", "0")
+hl.env("DXVK_HDR", "1")
+
+hl.env("STEAM_COMPAT_CLIENT_INSTALL_PATH", HOME .. "/.steam/steam")"
 )
 
 # Add each variable if not already present
 for var in "${ENV_VARS[@]}"; do
-  if ! grep -qF "$var" "$HYPR_CONF"; then
-    echo "$var" >>"$HYPR_CONF"
+  if ! grep -qF "$var" "$HYPR_LUA"; then
+    echo "$var" >>"$HYPR_LUA"
   else
     echo "Already exists: $var"
   fi
