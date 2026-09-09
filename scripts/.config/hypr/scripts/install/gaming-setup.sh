@@ -17,13 +17,13 @@ HYPR_LUA="$HOME/.config/hypr/hyprland.lua"
 # fi
 
 # Check if [multilib] is commented (starts with #)
-if grep -qE '^\s*#\s*\[multilib\]' "$PACMAN_CONF"; then
-  # Uncomment the [multilib] line and the line immediately following it
-  sed -i -e '/^\s*#\s*\[multilib\]/,+1s/^#//' "$PACMAN_CONF"
-  echo "###> Multilib repository has been enabled."
-else
-  echo "###> Multilib is already enabled."
-fi
+#if grep -qE '^\s*#\s*\[multilib\]' "$PACMAN_CONF"; then
+# Uncomment the [multilib] line and the line immediately following it
+sed -i -e '/^\s*#\s*\[multilib\]/,+1s/^#//' "$PACMAN_CONF"
+echo "###> Multilib repository has been enabled."
+#else
+#  echo "###> Multilib is already enabled."
+#fi
 
 # Update package database and install gaming
 sudo pacman -S --needed --noconfirm lib32-mesa wine-staging winetricks \
@@ -54,7 +54,7 @@ rm -rf xpadneo
 echo "Xbox Series X/S controller driver installed."
 echo "Configuring Bluetooth for Xbox Series X/S..."
 echo -e "[General]\nPrivacy = device\nJustWorksRepairing = always\nClass = 0x000100\nFastConnectable = true\n\n[LE]\nMinConnectionInterval=7\nMaxConnectionInterval=9\nConnectionLatency=0" | sudo tee -a /etc/bluetooth/main.conf
-echo -e "[Input]\nUserspaceHID=true" | sudo tee -a /etc/subuidluetooth/input.conf
+echo -e "[Input]\nUserspaceHID=true" | sudo tee -a /etc/bluetooth/input.conf
 echo "Configure Xbox Series X/S driver to start at boot..."
 sudo modprobe hid_xpadneo
 echo -e "hid_xpadneo" | sudo tee -a /etc/modules-load.d/xpadneo.conf
