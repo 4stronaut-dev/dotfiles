@@ -14,7 +14,7 @@ hl.monitor({
 	-- base arguments - FIX order
 	output = "DP-1",
 	mode = "2560x1440@180",
-	position = "1440x720",
+	position = "0x0",
 	scale = 1,
 	-- optional extra arguments - any order
 	vrr = 1,
@@ -33,11 +33,11 @@ hl.monitor({
 	-- base arguments - FIX order
 	output = "DP-2",
 	mode = "2560x1440@144",
-	position = "0x0",
+	position = "2560x0",
 	scale = 1,
 	-- optional extra arguments - any order
 	disabled = false,
-	transform = 3,
+	transform = 0,
 	vrr = 0,
 	bitdepth = 8,
 	cm = "srgb",
@@ -292,6 +292,8 @@ hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd(toggleSecondaryMonitor))
 hl.bind(mainMod .. " + SHIFT + H", hl.dsp.exec_cmd(toggleHDR))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + T", hl.dsp.layout("togglesplit"))

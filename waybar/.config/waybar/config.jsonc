@@ -28,7 +28,7 @@
   },
   "temperature#cpu": {
     "interval": 5,
-    "hwmon-path": "/sys/class/hwmon/hwmon4/temp1_input",
+    "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
     "format": " {icon}{temperatureC}℃",
     "format-icons": ["","","","",""]
   },
@@ -44,7 +44,7 @@
   },
   "temperature#gpu": {
     "interval": 5,
-    "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
+    "hwmon-path": "/sys/class/hwmon/hwmon2/temp2_input",
     "format": " {icon}{temperatureC}℃",
     "format-icons": ["","","","",""]
   },
