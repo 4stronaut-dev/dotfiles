@@ -14,17 +14,17 @@ sudo mkdir -p /var/lib/sddm/.config/hypr
 sudo tee /var/lib/sddm/.config/hypr/hyprland.lua >/dev/null <<'EOF'
 hl.monitor({
 	output = "DP-1",
-	mode = "preferred",
-	position = "1440x720",
+	mode = "2560x1440@180",
+	position = "0x0",
 	scale = "1",
 })
 
 hl.monitor({
   output = "DP-2",
   mode = "preferred",
-  position = "0x0",
+  position = "2560x0",
   scale = "1",
-  transform = 3,
+  transform = 0,
 })
 
 hl.config({

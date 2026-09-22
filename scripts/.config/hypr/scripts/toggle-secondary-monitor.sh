@@ -11,11 +11,11 @@ if [ "$CURRENT_DISABLED_VALUE" == "false" ]; then
 else
   hyprctl eval 'hl.monitor({
     output = "DP-2",
-    mode = "2560x1440",
-    position = "0x0",
+    mode = "2560x1440@144",
+    position = "2560x0",
     scale = 1,
     disabled = false,
-    transform = 3,
+    transform = 0,
     vrr = 0,
     bitdepth = 8,
     cm = "srgb",

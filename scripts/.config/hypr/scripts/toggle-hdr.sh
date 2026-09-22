@@ -6,7 +6,7 @@ if [[ "$CURRENT_CM" == "hdr" || "$CURRENT_CM" == "hdredid" ]]; then
   hyprctl eval 'hl.monitor({
     output = "DP-1",
     mode = "2560x1440@180",
-    position = "1440x720",
+    position = "0x0",
     scale = 1,
     vrr = 3,
     bitdepth = 8,
@@ -23,7 +23,7 @@ else
   hyprctl eval 'hl.monitor({
     output = "DP-1",
     mode = "2560x1440@180",
-    position = "1440x720",
+    position = "0x0",
     scale = 1,
     vrr = 3,
     bitdepth = 10,
