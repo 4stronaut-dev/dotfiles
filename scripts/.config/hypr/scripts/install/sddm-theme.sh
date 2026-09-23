@@ -14,17 +14,9 @@ sudo mkdir -p /var/lib/sddm/.config/hypr
 sudo tee /var/lib/sddm/.config/hypr/hyprland.lua >/dev/null <<'EOF'
 hl.monitor({
 	output = "DP-1",
-	mode = "2560x1440@180",
+	mode = "preferred",
 	position = "0x0",
 	scale = "1",
-})
-
-hl.monitor({
-  output = "DP-2",
-  mode = "preferred",
-  position = "2560x0",
-  scale = "1",
-  transform = 0,
 })
 
 hl.config({
@@ -35,7 +27,6 @@ hl.config({
 })
 
 hl.workspace_rule({ workspace = "1", monitor = "DP-1" })
-hl.workspace_rule({ workspace = "2", monitor = "DP-2" })
 EOF
 
 # Create SDDM config file to use wayland backend and apply the installed theme
