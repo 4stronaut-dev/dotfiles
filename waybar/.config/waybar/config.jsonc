@@ -116,7 +116,7 @@
 
   "upower": {
     "model": "Logitech PRO X",
-    "format": " {percentage} ",
+    "format": "  {percentage}",
     "tooltip": true,
     "tooltip-padding": 2,
     "tooltip-spacing": 12,

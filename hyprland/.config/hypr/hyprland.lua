@@ -1,10 +1,3 @@
--- Refer to the wiki for more information.
--- https://wiki.hypr.land/Configuring/Start/
-
--- You can (and should!!) split this configuration into multiple files
--- Create your files separately and then require them like this:
--- require("myColors")
-
 ------------------
 ---- MONITORS ----
 ------------------
@@ -31,49 +24,13 @@ local progs = require("config.programs")
 ---- AUTOSTART ----
 -------------------
 
--- See https://wiki.hypr.land/Configuring/Basics/Autostart/
-
--- Autostart necessary processes (like notifications daemons, status bars, etc.)
--- Or execute your favorite apps at launch like this:
-
-hl.on("hyprland.start", function()
-	hl.exec_cmd("waybar")
-	hl.exec_cmd("swaync")
-	hl.exec_cmd("hypridle")
-	hl.exec_cmd(progs.wallpaperHandler)
-end)
+require("config.autostart")
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
 -------------------------------
 
--- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
-
-hl.env("XCURSOR_SIZE", "24")
-hl.env("HYPRCURSOR_SIZE", "24")
-
-hl.env("QT_QPA_PLATFORM", "wayland")
-hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
-hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
-
-hl.env("GDK_BACKEND", "wayland")
-hl.env("SDL_VIDEODRIVER", "wayland")
-
-hl.env("WLR_NO_HARDWARE_CURSORS", "1")
-hl.env("XDG_SESSION_TYPE", "wayland")
-hl.env("XDG_SESSION_DESKTOP", "Hyprland")
-hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
-
-hl.env("EDITOR", "nvim")
-hl.env("WINEPREFIX", HOME .. "/.wine")
-hl.env("WINEARCH", "win64")
-hl.env("PROTON_ENABLE_WAYLAND", "1")
-hl.env("PROTON_ENABLE_HDR", "1")
-hl.env("WAYLANDDRV_PRIMARY_MONITOR", "DP-1")
-hl.env("DXVK_HUD", "0")
-hl.env("DXVK_HDR", "1")
-
-hl.env("STEAM_COMPAT_CLIENT_INSTALL_PATH", HOME .. "/.steam/steam")
+require("config.environment")
 
 -----------------------
 ----- PERMISSIONS -----
@@ -202,150 +159,22 @@ hl.config({
 ---- INPUT ----
 ---------------
 
-hl.config({
-	input = {
-		kb_layout = "us,hu",
-		kb_variant = "",
-		kb_model = "",
-		kb_options = "grp:alt_shift_toggle",
-		kb_rules = "",
-		follow_mouse = 1,
-		sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
-		touchpad = {
-			natural_scroll = false,
-		},
-	},
-})
-
-hl.gesture({
-	fingers = 3,
-	direction = "horizontal",
-	action = "workspace",
-})
-
--- Example per-device config
--- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Devices/ for more
-hl.device({
-	name = "epic-mouse-v1",
-	sensitivity = 0.0,
-})
-
--- hl.config({
--- 	cursor = {
--- 		no_warps = true,
--- 	},
--- })
+require("config.input")
 
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
+
 require("config.keybinds")
 
---------------------------------
----- WINDOWS AND WORKSPACES ----
---------------------------------
+-------------------------
+---- WORKSPACE RULES ----
+-------------------------
 
--- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
--- and https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
+require("config.workspacerules")
 
--- hl.workspace_rule({ workspace = "1", monitor = "DP-1" })
--- hl.workspace_rule({ workspace = "2", monitor = "DP-1" })
--- hl.workspace_rule({ workspace = "3", monitor = "DP-1" })
---
--- hl.workspace_rule({ workspace = "4", monitor = "DP-2" })
--- hl.workspace_rule({ workspace = "5", monitor = "DP-2" })
--- hl.workspace_rule({ workspace = "6", monitor = "DP-2" })
+----------------------
+---- WINDOW RULES ----
+----------------------
 
-local suppressMaximizeRule = hl.window_rule({
-	name = "suppress-maximize-events",
-	match = {
-		class = ".*",
-	},
-	-- Ignore maximize requests from all apps. You'll probably like this.
-	suppress_event = "maximize",
-})
-
-hl.window_rule({
-	-- Fix some dragging issues with XWayland
-	name = "fix-xwayland-drags",
-	match = {
-		class = "^$",
-		title = "^$",
-		xwayland = true,
-		float = true,
-		fullscreen = false,
-		pin = false,
-	},
-	no_focus = true,
-})
-
-hl.window_rule({
-	name = "move-hyprland-run",
-	match = {
-		class = "hyprland-run",
-	},
-	move = "20 monitor_h-120",
-	float = true,
-})
-
-hl.window_rule({
-	name = "start-steamapps-in-fullscreen",
-	match = {
-		initial_class = "^(steam_app_\\d+)$",
-	},
-	fullscreen = true,
-})
-
-hl.window_rule({
-	name = "start-waybarmodule-clickaction-in-center",
-	match = {
-		class = "^(waybarmodule)$",
-	},
-	float = true,
-	center = true,
-	max_size = "800 600",
-})
-
-hl.window_rule({
-	name = "start-nm-connection-editor-in-center",
-	match = {
-		class = "^(nm-connection-editor)$",
-	},
-	float = true,
-	center = true,
-	min_size = "800 600",
-	max_size = "1024 768",
-})
-
-hl.window_rule({
-	name = "start-blueman-manager-in-center",
-	match = {
-		class = "^(blueman-manager)$",
-	},
-	float = true,
-	center = true,
-	min_size = "800 600",
-	max_size = "1024 768",
-})
-
-hl.window_rule({
-	name = "start-pavucontrol-in-center",
-	match = {
-		class = "^(org.pulseaudio.pavucontrol)$",
-	},
-	float = true,
-	center = true,
-	min_size = "1024 768",
-	max_size = "1280 1024",
-})
-
-hl.window_rule({
-	name = "start-solaar-in-center",
-	match = {
-		class = "^(solaar)$",
-	},
-	float = true,
-	center = true,
-	min_size = "800 600",
-	max_size = "1024 768",
-})
+require("config.windowrules")
