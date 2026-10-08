@@ -4,7 +4,7 @@
 
 -- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
 
-local suppressMaximizeRule = hl.window_rule({
+hl.window_rule({
 	name = "suppress-maximize-events",
 	match = {
 		class = ".*",
