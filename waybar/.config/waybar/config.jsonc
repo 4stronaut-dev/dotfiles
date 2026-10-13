@@ -2,13 +2,14 @@
   "position": "top",
   "orientation": "horizontal",
   "output": "",
-  "modules-left": ["hyprland/workspaces", "group/sysmon"],
+  "modules-left": ["custom/archmenu", "group/sysmon", "hyprland/workspaces"],
   "modules-center": ["clock"],
   "modules-right": ["hyprland/language",/*"group/ghub",*/"upower","network","bluetooth","pulseaudio","custom/poweroff"],
-  
-  "hyprland/workspaces":{
-    "format": {},
-    "on-click": "activate"
+
+  "custom/archmenu": {
+    "format": "",
+    "tooltip-format": "Left click: Open wofi",
+    "on-click": "wofi --show drun"
   },
 
 /*  "group/ghub": {
@@ -52,6 +53,11 @@
     "interval": 5,
     "exec": "awk '{printf \"%.2fGB\", $1/1000/1000/1000}' /sys/class/hwmon/hwmon2/device/mem_info_vram_used",
     "format": "  {}"
+  },
+
+  "hyprland/workspaces":{
+    "format": {},
+    "on-click": "activate"
   },
 
   "clock": {

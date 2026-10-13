@@ -62,6 +62,8 @@ hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 -- Move/resize windows LMB/RMB and dragging
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag())
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize())
+-- Close active window with mouse button 5
+hl.bind("mouse:276", hl.dsp.window.close())
 -- Laptop multimedia keys for volume and LCD brightness
 -- hl.bind(
 -- 	"XF86AudioRaiseVolume",

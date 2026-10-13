@@ -1,16 +1,17 @@
 #!/bin/bash
 
-options=("Lock" "Logout" "Power Off")
-choice=$(printf '%s\n' "${options[@]}" |
-  wofi --show dmenu --prompt "Power menu" \
-    --location top_right --yoffset 10 --xoffset -110 --width 140 --lines 5)
+options=(" Lock" "󰍃 Logout" "󰜉 Restart" " Power Off")
+choice=$(printf '%s\n' "${options[@]}" | wofi --show dmenu --prompt "Power menu" --hide-scroll --width 140 --lines 5)
 
 case "$choice" in
-"Lock")
+" Lock")
   hyprlock
   ;;
-"Logout")
+"󰍃 Logout")
   hyprshutdown
+  ;;
+"󰜉 Restart")
+  hyprshutdown -t 'Restarting..' --post-cmd 'systemctl reboot'
   ;;
 "Power Off")
   hyprshutdown -t 'Shutting down...' --post-cmd 'systemctl poweroff'
