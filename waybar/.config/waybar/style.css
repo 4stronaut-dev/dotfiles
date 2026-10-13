@@ -61,12 +61,12 @@ button:hover {
   100% { color: @green; }
 }
 
-#sysmon:hover, #clock:hover, #language:hover, /*#ghub:hover,*/#upower:hover, #network:hover, #bluetooth:hover, #pulseaudio:hover {
+#sysmon:hover, #clock:hover, #language:hover, /*#ghub:hover,*/#upower:hover, #network:hover, #bluetooth:hover, #pulseaudio:hover, #custom-poweroff:hover {
   background-color: @surface0;
   border-radius: 14px;
 }
 
-#sysmon, #clock, #language, /*#ghub,*/#upower, #network, #bluetooth, #pulseaudio {
+#sysmon, #clock, #language, /*#ghub,*/#upower, #network, #bluetooth, #pulseaudio, #custom-poweroff {
   background: transparent;
   transition: all 0.3s ease;
   padding: 2px 12px;
@@ -173,6 +173,12 @@ button:hover {
   color: @teal;
   border-bottom: 2px solid @teal;
   border-top: 2px solid @teal;
+}
+
+#custom-poweroff {
+  color: @green;
+  border-bottom: 2px solid @green;
+  border-top: 2px solid @green;
 }
 
 /* If workspaces is the leftmost module, omit left margin */

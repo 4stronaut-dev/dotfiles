@@ -4,7 +4,7 @@
   "output": "",
   "modules-left": ["hyprland/workspaces", "group/sysmon"],
   "modules-center": ["clock"],
-  "modules-right": ["hyprland/language",/*"group/ghub",*/"upower","network","bluetooth","pulseaudio"],
+  "modules-right": ["hyprland/language",/*"group/ghub",*/"upower","network","bluetooth","pulseaudio","custom/poweroff"],
   
   "hyprland/workspaces":{
     "format": {},
@@ -173,5 +173,12 @@
       "default": ["󰕿", "", ""]
     },
     "on-click": "pavucontrol"
+  },
+
+  "custom/poweroff": {
+    "format": "",
+    "tooltip-format": "Left click: Power Menu\nRight click: instant Power Off",
+    "on-click": "~/.config/waybar/scripts/waybar-poweroff.sh",
+    "on-click-right": "hyprshutdown -t 'Shutting down...' --post-cmd 'systemctl poweroff'"
   }
 }
