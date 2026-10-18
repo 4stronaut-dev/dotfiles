@@ -7,7 +7,6 @@ require("config.monitor-secondary")
 
 hl.config({
 	render = {
-		-- cm_fs_passthrough = 0 # bypass wayland ColorManagement pipeline (0:off | 1:always ON for fullscreen apps | 2:ON only for HDR fullscreen apps)
 		cm_auto_hdr = 1, -- auto switch to HDR for fullscreen app (0:off | 1:on to HDR | 2:on to HDREDID)
 		direct_scanout = 0, -- change to 1, to improve performance by scanning out buffers directly when possible
 	},
