@@ -1,15 +1,30 @@
 {
   "position": "top",
   "orientation": "horizontal",
+  "height": 38,
   "output": "",
-  "modules-left": ["custom/archmenu", "group/sysmon", "hyprland/workspaces"],
-  "modules-center": ["clock"],
-  "modules-right": ["hyprland/language",/*"group/ghub",*/"upower","network","bluetooth","pulseaudio","custom/poweroff"],
+  "modules-left": ["clock","group/sysmon"],
+  "modules-center": ["custom/archmenu","hyprland/workspaces"],
+  "modules-right": ["upower","hyprland/language",/*"group/ghub",*/"network","bluetooth","pulseaudio","custom/poweroff"],
 
   "custom/archmenu": {
     "format": "",
     "tooltip-format": "Left click: Open wofi",
     "on-click": "wofi --show drun"
+  },
+
+  "hyprland/workspaces":{
+    "format": "[{id}]{windows}",
+    "on-click": "activate",
+    "workspace-taskbar": {
+      "enable": true,
+      "update-active-window": true,
+      "active-window-position": "first",
+      "format": "{icon}",
+      "icon-size": 18,
+      "max-icons": 4,
+      "on-click-window": "hyprctl dispatch 'hl.dsp.focus({ window = \"address:{address}\" })'"
+    }
   },
 
 /*  "group/ghub": {
@@ -55,15 +70,10 @@
     "format": "  {}"
   },
 
-  "hyprland/workspaces":{
-    "format": {},
-    "on-click": "activate"
-  },
-
   "clock": {
     "interval": 1,
-    "format-alt": "{:%T}",
-    "format": "{:%T - %Y %b %d, %a}",
+    "format-alt": " {:%T}",
+    "format": "󰃰 {:%T - %Y %b %d, %a}",
     "tooltip-format": "<tt>{calendar}</tt>",
     "calendar": {
       "iso8601": true,
