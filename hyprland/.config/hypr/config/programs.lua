@@ -14,4 +14,5 @@ return {
 		.. "/.config/waybar/scripts/waybar-workspace-handler.py 2> "
 		.. HOME
 		.. "/.config/waybar/scripts/waybar-workspace-handler.log",
+	showKeybinds = HOME .. "/.config/hypr/scripts/show-keybinds.sh",
 }

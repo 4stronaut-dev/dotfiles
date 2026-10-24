@@ -9,12 +9,13 @@
 
   "custom/archmenu": {
     "format": "",
-    "tooltip-format": "Left click: Open wofi",
+    "tooltip-format": "Arch menu\n\nLeft click: Open application launcher.",
     "on-click": "wofi --show drun"
   },
 
   "hyprland/workspaces":{
     "format": "[{id}]{windows}",
+    "tooltip-format": "Left or Right click: activate workspace",
     "all-outputs": false,
     "on-click": "activate",
     "workspace-taskbar": {
@@ -41,34 +42,39 @@
   "cpu": {
     "interval": 5,
     "format": " {icon} 󰓅 {avg_frequency}Ghz",
+    "tooltip-format": "System Monitor module/CPU/CPU Load",
     "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
   },
   "temperature#cpu": {
     "interval": 5,
     "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
     "format": " {icon}{temperatureC}℃",
+    "tooltip-format": "System Monitor module/CPU/CPU Tempereature",
     "format-icons": ["","","","",""]
   },
   "memory": {
     "interval": 5,
     "format": " {percentage}%",
-    "tooltip-format": "\tUsed\t\tTotal\nMemory:\t{used}G\t/\t{total}G\nSwap:\t{swapUsed}G\t/\t{swapTotal}G"
+    "tooltip-format": "System Monitor module/Memory\n\n\tUsed\t\tTotal\nMemory:\t{used}G\t/\t{total}G\nSwap:\t{swapUsed}G\t/\t{swapTotal}G"
   },
   "custom/gpu": {
     "interval": 5,
     "exec": "cat /sys/class/hwmon/hwmon2/device/gpu_busy_percent",
     "format": "󰨇 {}%",
+    "tooltip-format": "System Monitor module/GPU/GPU Load"
   },
   "temperature#gpu": {
     "interval": 5,
     "hwmon-path": "/sys/class/hwmon/hwmon2/temp2_input",
     "format": " {icon}{temperatureC}℃",
+    "tooltip-format": "System Monitor module/GPU/GPU Temperature",
     "format-icons": ["","","","",""]
   },
   "custom/gpu-mem": {
     "interval": 5,
     "exec": "awk '{printf \"%.2fGB\", $1/1000/1000/1000}' /sys/class/hwmon/hwmon2/device/mem_info_vram_used",
-    "format": "  {}"
+    "format": "  {}",
+    "tooltip-format": "System Monitor module/GPU/GPU Memory Usage"
   },
 
   "clock": {
@@ -102,8 +108,10 @@
   "hyprland/language": {
     "format": "{}",
     "format-en": "  🇺🇸",
-    "format-hu": "  🇭🇺"
-    /*"on-click": "hyprctl switchxkblayout all next" */
+    "format-hu": "  🇭🇺",
+    "tooltip-format": "Language module\n\nLeft click: Switch keyboard layout.\nRight click: Show key binds.",
+    "on-click": "hyprctl switchxkblayout all next",
+    "on-click-right": "~/.config/hypr/scripts/show-keybinds.sh"
   },
 
 /*  "custom/ghub-main": {
@@ -135,6 +143,7 @@
     "model": "Logitech PRO X",
     "format": "  {percentage}",
     "tooltip": true,
+    "tooltip-format": "Power Monitor\n\nLeft click: Open Solaar mouse manager",
     "tooltip-padding": 2,
     "tooltip-spacing": 12,
     "hide-if-empty": true,
@@ -159,10 +168,11 @@
       "ethernet": ""
     },
     "tooltip": true,
-    "tooltip-format-disabled": "Network devices are turned OFF or not available",
-    "tooltip-format-disconnected":"Network device is ON but disconnected or unplugged",
-    "tooltip-format-ethernet": "Ethernet device: {ifname}\nIP address: {ipaddr}\nGateway: {gwaddr}",
-    "tooltip-format-wifi": "WiFi device: {ifname}\nWiFi connection: {essid} @ {frequency}GHz with signal level {signalStrength}%\nIP address: {ipaddr}\nGateway: {gwaddr}",
+    "tooltip-format": "Network Module\n\nLeft click Open nmtui-connect\tRight-click: Open Connection Editor",
+    "tooltip-format-disabled": "Network Module\n\nNetwork devices are turned OFF or not available.\n\nLeft click: Open nmtui-connect\tRight click: Open Connection Editor.",
+    "tooltip-format-disconnected":"Network Module\n\nNetwork device is ON but disconnected or unplugged.\n\nLeft click: Open nmtui-connect\tRight click: Open Connection Editor.",
+    "tooltip-format-ethernet": "Network Module\n\nEthernet device: {ifname}\nIP address: {ipaddr}\nGateway: {gwaddr}\n\nLeft click: Open nmtui-connect\tRight click: Open Connection Editor.",
+    "tooltip-format-wifi": "Network Module\n\nWiFi device: {ifname}\nWiFi connection: {essid} @ {frequency}GHz with signal level {signalStrength}%\nIP address: {ipaddr}\nGateway: {gwaddr}\n\nLeft click: Open nmtui-connect\tRight click: Open Connection Editor.",
     "on-click": "kitty --class waybarmodule -e nmtui-connect",
     "on-click-right": "nm-connection-editor"
   },
@@ -177,9 +187,10 @@
     "format-connected-battery": " [{num_connections}]:({icon} {device_battery_percentage}%) {device_alias}",
     "format-icons": ["󰥊","󰤾","󰤿","󰥀","󰥁","󰥂","󰥃","󰥄","󰥅","󰥆","󰥈"],
     "tooltip": "true",
+    "tooltip-format": "Bluetooth Module.\n\nLeft click: Open Bluetooth Manager",
     "tooltip-format-enumerate-connected": "{device_alias}",
     "tooltip-format-enumerate-connected-battery": "{device_alias} ({icon} {device_battery_percentage}%)",
-    "tooltip-format-connected": "{device_enumerate}",
+    "tooltip-format-connected": "Bluetooth Module\n\n{device_enumerate}\n\nLeft click: Open Bluetooth Manager",
     "on-click": "blueman-manager"
   },
 
@@ -189,12 +200,13 @@
     "format-icons": {
       "default": ["󰕿", "", ""]
     },
+    "tooltip-format": "Audio Module\n\nScroll up/down: Volume up/down\nLeft click: Open Audio Manager",
     "on-click": "pavucontrol"
   },
 
   "custom/poweroff": {
     "format": "",
-    "tooltip-format": "Left click: Power Menu\nRight click: instant Power Off",
+    "tooltip-format": "Power Switch Module\n\nLeft click: Power Menu\nRight click: instant Power Off",
     "on-click": "~/.config/waybar/scripts/waybar-poweroff.sh",
     "on-click-right": "hyprshutdown -t 'Shutting down...' --post-cmd 'systemctl poweroff'"
   }
