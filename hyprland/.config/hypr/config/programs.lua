@@ -9,4 +9,9 @@ return {
 	wallpaperHandler = HOME .. "/.config/hypr/scripts/hyprpaper-handler.sh",
 	toggleHDR = HOME .. "/.config/hypr/scripts/toggle-hdr.sh",
 	toggleSecondaryMonitor = HOME .. "/.config/hypr/scripts/toggle-secondary-monitor.sh",
+	waybarWorkspaceHandler = "python3 "
+		.. HOME
+		.. "/.config/waybar/scripts/waybar-workspace-handler.py 2> "
+		.. HOME
+		.. "/.config/waybar/scripts/waybar-workspace-handler.log",
 }
