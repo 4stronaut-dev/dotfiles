@@ -19,7 +19,7 @@ fi
 sudo pacman -Syu --noconfirm --needed
 
 # Install gaming packages
-sudo pacman -S --needed --noconfirm lib32-mesa vulkan-radeon lib32-vulkan-radeon \
+sudo pacman -S --needed --noconfirm mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon \
   gamemode lib32-gamemode mangohud lib32-mangohud gamescope steam lutris
 
 # Install Proton-CachyOS (it is maintained by yay, no manual update needed via ProtonPlus)
