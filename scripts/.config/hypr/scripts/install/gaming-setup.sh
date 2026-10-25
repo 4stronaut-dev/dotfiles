@@ -39,11 +39,10 @@ if ! id -nG "$USER" | grep -qw "input"; then
 fi
 
 # Install and configure Xbox Series X/S wireless controller
-git clone https://github.com/atar-axis/xpadneo.git "$HOME"/xpadneo
-cd "$HOME"/xpadneo
-sudo ./install.sh
-cd ..
-rm -rf xpadneo
+# Install dependencies for xpadneo-dkms version of the driver -> dkms version needed to proper bluetooth pairing.
+sudo pacman -S --needed --noconfirm dkms linux-headers
+# Install xpadneo-dkms driver
+yay -S --needed --noconfirm xpadneo-dkms
 echo "Xbox Series X/S controller driver installed."
 echo "Configuring Bluetooth for Xbox Series X/S..."
 echo -e "[General]\nPrivacy = device\nJustWorksRepairing = always\nClass = 0x000100\nFastConnectable = true\n\n[LE]\nMinConnectionInterval=7\nMaxConnectionInterval=9\nConnectionLatency=0" | sudo tee -a /etc/bluetooth/main.conf
@@ -51,7 +50,7 @@ echo -e "[Input]\nUserspaceHID=true" | sudo tee -a /etc/bluetooth/input.conf
 echo "Configure Xbox Series X/S driver to start at boot..."
 sudo modprobe hid_xpadneo
 echo -e "hid_xpadneo" | sudo tee -a /etc/modules-load.d/xpadneo.conf
-echo "Xbox Series X/S controller driver configured. Please do pairing after reboot!"
+echo "Xbox Series X/S controller driver configured. Please reboot then do the pairing after reboot!"
 
 # Install Logitech Gamer Keyboard and Mouse handler application: Solaar
 sudo pacman -S --needed --noconfirm solaar
