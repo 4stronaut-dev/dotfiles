@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "###> Installing mpv and media related packages..."
 # install packages for mpv media player
 sudo pacman -S --needed --noconfirm mpv yt-dlp libva-utils
 

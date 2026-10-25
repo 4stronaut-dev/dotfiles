@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "###> Installing spotify..."
+
 # install packages for Spotify audio stream player
 yay -S --needed --noconfirm spotify
 

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "###> Installing SDDM and Sugar Candy theme..."
 # install Sugar-Candy theme for sddm login manager
 sudo pacman -S --needed --noconfirm sddm
 yay -S --needed --noconfirm sddm-theme-sugar-candy-git
@@ -7,6 +8,9 @@ yay -S --needed --noconfirm sddm-theme-sugar-candy-git
 echo "###> Theme has been installed for sddm!"
 
 # Create hyperland config for SDDM's environment to handle monitor layout
+
+# Check if sddm hyprland config is already exist and remove if yes
+if [ -d /var/lib/sddm/.config/hypr ]; then sudo rm -rf /var/lib/sddm/.config/hypr; fi
 
 # Create directory for the hyprland config file
 sudo mkdir -p /var/lib/sddm/.config/hypr
@@ -29,6 +33,9 @@ hl.config({
 
 hl.workspace_rule({ workspace = "1", monitor = "DP-1" })
 EOF
+
+# Check if there is an sddm.conf and remove if yes
+if [ -f /etc/sddm.conf ]; then sudo rm /etc/sddm.conf; fi
 
 # Create SDDM config file to use wayland backend and apply the installed theme
 sudo tee /etc/sddm.conf >/dev/null <<'EOF'
