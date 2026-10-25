@@ -2,7 +2,8 @@
 
 # Define the relevant configuration files
 PACMAN_CONF="/etc/pacman.conf"
-HYPR_LUA="$HOME/.config/hypr/hyprland.lua"
+PACMAN_CONF_BACKUP="${PACMAN_CONF}.bak"
+HYPRLAND_CONF = "$HOME/.config/hypr/hyprland.lua"
 
 # # Check if the file exist
 # if [[ ! -f "$PACMAN_CONF" ]]; then
@@ -17,27 +18,31 @@ HYPR_LUA="$HOME/.config/hypr/hyprland.lua"
 # fi
 
 # Check if [multilib] is commented (starts with #)
-#if grep -qE '^\s*#\s*\[multilib\]' "$PACMAN_CONF"; then
-# Uncomment the [multilib] line and the line immediately following it
-sed -i -e '/^\s*#\s*\[multilib\]/,+1s/^#//' "$PACMAN_CONF"
-echo "###> Multilib repository has been enabled."
-#else
-#  echo "###> Multilib is already enabled."
-#fi
+if ! grep -q '^\[multilib\]' "$PACMAN_CONF"; then
+  sudo cp "$PACMAN_CONF" "$PACMAN_CONF_BACKUP"
+  line=$(grep -n '^\s*#\s*\[multilib\]' "$PACMAN_CONF" | head -1 | cut -d: -f1)
+  sed -i -e "${line}s/^#//" -e "$((line + 1))s/^#//" "$PACMAN_CONF"
+  echo "###> Multilib repository has been enabled."
+else
+  echo "###> Multilib is already enabled."
+fi
 
-# Update package database and install gaming
-sudo pacman -S --needed --noconfirm lib32-mesa wine-staging winetricks \
-  vkd3d lib32-vkd3d vulkan-radeon lib32-vulkan-radeon \
-  vulkan-icd-loader lib32-vulkan-icd-loader \
-  linux-headers dkms steam lutris gamescope xdg-desktop-portal-hyprland
+# Update package database to include 32bit packages as well.
+sudo pacman -Syu --noconfirm --needed
 
-yay -S --needed --noconfirm protonplus
+# Install gaming packages
+sudo pacman -S --needed --noconfirm lib32-mesa vulkan-radeon lib32-vulkan-radeon \
+  gamemode lib32-gamemode mangohud lib32-mangohud gamescope steam lutris
 
+# Install Proton-CachyOS (it is maintained by yay, no manual update needed via ProtonPlus)
+yay -S --needed --noconfirm proton-cachyos-slr
+
+# Notification for the user about the needed manual steps
 echo "###> Gaming packages have been installed. After reboot you have to do the following steps:"
 echo "> 1. Start Steam to initialize its configuration. Then close Steam."
-echo "> 2. Start ProtonPlus and install latest version of ProtonGE."
-echo "> 3. Start Steam again, go to Setting->Compatibility: enable Steamplay, and select the installed ProtonGE from the list."
-echo "> 4. Start Lutris. In wine runners section configure the installed ProtonGE as the default runner."
+echo "> 2. Start Steam again, go to Setting->Compatibility: enable Steamplay, and select Proton-CachyOS from the list."
+echo "> 3. Start Lutris. In wine runners section configure Proton-CahcyOS as the default runner."
+echo "> 4.(optional) In Lutris the runner have a system tab, here check the default game install folder, enable and configure gamemode, gamescope, mangohud."
 
 # Ensure that $USER is in input group
 if ! id -nG "$USER" | grep -qw "input"; then

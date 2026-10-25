@@ -3,7 +3,7 @@
 echo "###> Installing shell..."
 
 # install packages for fish shell
-yay -S --noconfirm --needed fish fastfetch
+sudo pacman -S --noconfirm --needed fish fastfetch
 
 # check if fish is in the allowed shell list
 FISH_PATH=$(which fish)
