@@ -2,24 +2,12 @@
 
 # Define the relevant configuration files
 PACMAN_CONF="/etc/pacman.conf"
-PACMAN_CONF_BACKUP="${PACMAN_CONF}.bak"
-HYPRLAND_CONF = "$HOME/.config/hypr/hyprland.lua"
-
-# # Check if the file exist
-# if [[ ! -f "$PACMAN_CONF" ]]; then
-#  echo "Error: $PACMAN_CONF not found."
-#  exit 1
-# fi
-#
-# # Check if the file is writable
-# if [[ ! -w "$PACMAN_CONF" ]]; then
-#  echo "Error: Cannot write to $PACMAN_CONF. Run with sudo."
-#  exit 1
-# fi
+HYPRLAND_CONF="$HOME/.config/hypr/hyprland.lua"
 
 # Check if [multilib] is commented (starts with #)
 if ! grep -q '^\[multilib\]' "$PACMAN_CONF"; then
-  sudo cp "$PACMAN_CONF" "$PACMAN_CONF_BACKUP"
+  sudo cp "$PACMAN_CONF" "$PACMAN_CONF.bak"
+  echo "> Backup created: $PACMAN_CONF.bak"
   line=$(grep -n '^\s*#\s*\[multilib\]' "$PACMAN_CONF" | head -1 | cut -d: -f1)
   sed -i -e "${line}s/^#//" -e "$((line + 1))s/^#//" "$PACMAN_CONF"
   echo "###> Multilib repository has been enabled."
@@ -73,9 +61,9 @@ sudo udevadm control --reload-rules
 # Create necessary environment variables
 echo "Create necessary environment variables..."
 # Backup the original config (if not already backed up)
-if [[ ! -f "$HYPR_LUA.bak" ]]; then
-  cp "$HYPR_LUA" "$HYPR_LUA.bak"
-  echo "> Backup created: $HYPR_LUA.bak"
+if [[ ! -f "$HYPRLAND_CONF.bak" ]]; then
+  cp "$HYPRLAND_CONF" "$HYPRLAND_CONF.bak"
+  echo "> Backup created: $HYPRLAND_CONF.bak"
 fi
 
 # List of environment variables to add
@@ -108,8 +96,8 @@ hl.env("STEAM_COMPAT_CLIENT_INSTALL_PATH", HOME .. "/.steam/steam")")
 
 # Add each variable if not already present
 for var in "${ENV_VARS[@]}"; do
-  if ! grep -qF "$var" "$HYPR_LUA"; then
-    echo "$var" >>"$HYPR_LUA"
+  if ! grep -qF "$var" "$HYPRLAND_CONF"; then
+    echo "$var" >>"$HYPRLAND_CONF"
   else
     echo "Already exists: $var"
   fi
