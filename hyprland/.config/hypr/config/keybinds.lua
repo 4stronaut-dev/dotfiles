@@ -37,11 +37,15 @@ hl.bind(
 	hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }),
 	{ description = "Maximize/Demaximize active window." }
 )
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }), { description = "Float/Tile active window." })
 hl.bind(
 	mainMod .. " + T",
 	hl.dsp.layout("togglesplit"),
 	{ description = "Switch Vertical/Horizontal split of window tiles." }
+)
+hl.bind(
+	mainMod .. " + SHIFT + T",
+	hl.dsp.window.float({ action = "toggle" }),
+	{ description = "Float/Tile active window." }
 )
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(progs.menu), { description = "Open application launcher." })
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(progs.browser), { description = "Open web browser." })
@@ -56,6 +60,12 @@ hl.bind(
 	hl.dsp.exec_cmd("hyprshot -m region"),
 	{ description = "Create screenshot on a selectable region of the screeen." }
 )
+hl.bind(
+	mainMod .. " + V",
+	hl.dsp.exec_cmd("voxtype record start"),
+	{ description = "Dictation: Hold key to talk, transcription on key release." }
+)
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("voxtype record stop"), { release = true })
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(progs.wallpaperChange), { description = "Change wallpaper random." })
 -- Move focus
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }), { description = "Move focus to left." })

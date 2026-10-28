@@ -14,6 +14,7 @@ stow -v -R --no-folding lazyvim
 stow -v -R --no-folding mpv
 stow -v -R scripts
 stow -v -R --no-folding starship
+stow -v -R voxtype
 stow -v -R waybar
 stow -v -R wofi
 stow -v -R yazi

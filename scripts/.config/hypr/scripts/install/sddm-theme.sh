@@ -15,7 +15,7 @@ sudo tee /var/lib/sddm/.config/hypr/hyprland.lua >/dev/null <<'EOF'
 hl.monitor({
 	output = "",
 	mode = "preferred",
-	position = "0x0",
+	position = "auto",
 	scale = "1",
 })
 
