@@ -3,7 +3,7 @@
   "orientation": "horizontal",
   "height": 38,
   "output": "",
-  "modules-left": ["clock","group/sysmon"],
+  "modules-left": ["clock","group/sysmon","hyprland/window"],
   "modules-center": ["custom/archmenu","hyprland/workspaces"],
   "modules-right": ["upower","hyprland/language",/*"group/ghub",*/"network","bluetooth","pulseaudio","custom/poweroff"],
 
@@ -13,10 +13,10 @@
     "on-click": "wofi --show drun"
   },
 
-  "hyprland/workspaces":{
+  "hyprland/workspaces": {
     "format": "[{id}]{windows}",
     "tooltip-format": "Left or Right click: activate workspace",
-    "all-outputs": false,
+    "all-outputs": true,
     "on-click": "activate",
     "workspace-taskbar": {
       "enable": true,
@@ -29,52 +29,88 @@
     }
   },
 
+  "hyprland/window": {
+    "format": "{}",
+    "rewrite": {
+      "(.*) - Ask Brave - Brave": "$1",
+      "(.*) - Brave": "$1",
+      "(.*) - mpv": "$1"
+    },
+    "expand": true,
+    "separate-outputs": false,
+    "icon": true,
+    "icon-size": 18
+  },
+
 /*  "group/ghub": {
     "id": "ghub",
     "orientation": "horizontal",
     "modules": ["custom/ghub-main", "custom/ghub-battery"]
   }, */
 
-  "group/sysmon":{
+  "group/sysmon": {
     "orientation": "inherit",
-    "modules": ["cpu", "temperature#cpu", "memory", "custom/gpu", "temperature#gpu","custom/gpu-mem"]
+    "modules": ["group/cpu","memory","group/gpu"]
   },
-  "cpu": {
-    "interval": 5,
-    "format": " {icon} 󰓅 {avg_frequency}Ghz",
-    "tooltip-format": "System Monitor module/CPU/CPU Load",
-    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
+  "group/cpu": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "hidden",
+      "transition-left-to-right": true
+    },
+    "modules": ["temperature#cpu","cpu#load","cpu#freq"]
   },
   "temperature#cpu": {
     "interval": 5,
     "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
-    "format": " {icon}{temperatureC}℃",
-    "tooltip-format": "System Monitor module/CPU/CPU Tempereature",
+    "format": " {icon}{temperatureC}℃",
+    "tooltip-format": "System Monitor module/CPU Tempereature",
     "format-icons": ["","","","",""]
+  },
+  "cpu#load": {
+    "interval": 5,
+    "format": "  {icon}",
+    "tooltip-format": "System Monitor module/CPU Load: {usage}%",
+    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
+  },
+  "cpu#freq": {
+    "interval": 5,
+    "format": " 󰓅 {avg_frequency}Ghz",
+    "tooltip-format": "System Monitor module/CPU frequency",
   },
   "memory": {
     "interval": 5,
     "format": " {percentage}%",
     "tooltip-format": "System Monitor module/Memory\n\n\tUsed\t\tTotal\nMemory:\t{used}G\t/\t{total}G\nSwap:\t{swapUsed}G\t/\t{swapTotal}G"
   },
+  "group/gpu": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "hidden",
+      "transition-left-to-right": true
+    },
+    "modules": ["custom/gpu","temperature#gpu","custom/gpu-mem"]
+  },
   "custom/gpu": {
     "interval": 5,
     "exec": "cat /sys/class/hwmon/hwmon2/device/gpu_busy_percent",
     "format": "󰨇 {}%",
-    "tooltip-format": "System Monitor module/GPU/GPU Load"
+    "tooltip-format": "System Monitor module/GPU Load"
   },
   "temperature#gpu": {
     "interval": 5,
     "hwmon-path": "/sys/class/hwmon/hwmon2/temp2_input",
     "format": " {icon}{temperatureC}℃",
-    "tooltip-format": "System Monitor module/GPU/GPU Temperature",
+    "tooltip-format": "System Monitor module/GPU Temperature",
     "format-icons": ["","","","",""]
   },
   "custom/gpu-mem": {
     "interval": 5,
     "exec": "awk '{printf \"%.2fGB\", $1/1000/1000/1000}' /sys/class/hwmon/hwmon2/device/mem_info_vram_used",
     "format": "  {}",
-    "tooltip-format": "System Monitor module/GPU/GPU Memory Usage"
+    "tooltip-format": "System Monitor module/GPU Memory Usage"
   },
 
   "clock": {

@@ -27,13 +27,16 @@ def check_fullscreen():
             return True
     return False
 
-def set_all_outputs(value):
+def set_outputs(value):
     with open(WAYBAR_CONFIG, "r") as f:
         content = f.read()
-    old = '"all-outputs": true' if not value else '"all-outputs": false'
-    new = '"all-outputs": false' if not value else '"all-outputs": true'
-    if old in content:
-        content = content.replace(old, new)
+    old_all_outputs = '"all-outputs": false' if value else '"all-outputs": true'
+    new_all_outputs = '"all-outputs": true' if value else '"all-outputs": false'
+    old_separate_outputs = '"separate-outputs": true' if value else '"separate-outputs": false'
+    new_separate_outputs = '"separate-outputs": false' if value else '"separate-outputs": true'
+    if old_all_outputs in content:
+        content = content.replace(old_all_outputs, new_all_outputs)
+        content = content.replace(old_separate_outputs, new_separate_outputs)
         with open(WAYBAR_CONFIG, "w") as f:
             f.write(content)
         subprocess.run(["pkill", "-SIGUSR2", "waybar"])
@@ -53,7 +56,7 @@ def main():
             if event.startswith("fullscreen"):
                 state = check_fullscreen()
                 if state != last_state:
-                    set_all_outputs(state)
+                    set_outputs(state)
                     last_state = state
 
 if __name__ == "__main__":
