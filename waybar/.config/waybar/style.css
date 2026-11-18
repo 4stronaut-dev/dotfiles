@@ -67,12 +67,12 @@ button:hover {
   100% { color: @green; }
 }
 
-#custom-archmenu:hover, #sysmon:hover, #clock:hover, #language:hover, /*#ghub:hover,*/#upower:hover, #network:hover, #bluetooth:hover, #pulseaudio:hover, #custom-poweroff:hover {
+#custom-archmenu:hover, #sysmon:hover, #clock:hover, #media:hover, #language:hover, /*#ghub:hover,*/#upower:hover, #network:hover, #bluetooth:hover, #pulseaudio:hover, #custom-poweroff:hover {
   background-color: @surface0;
   border-radius: 14px;
 }
 
-#custom-archmenu, #sysmon, #clock, #language, /*#ghub,*/#upower, #network, #bluetooth, #pulseaudio, #custom-poweroff {
+#custom-archmenu, #sysmon, #clock, #media, #language, /*#ghub,*/#upower, #network, #bluetooth, #pulseaudio, #custom-poweroff {
   background: transparent;
   transition: all 0.3s ease;
   padding: 2px 8px;
@@ -106,6 +106,21 @@ button:hover {
   color: @rosewater;
   border-bottom: 2px solid @rosewater;
   border-top: 2px solid @rosewater;
+}
+
+#media {
+  color: #42ff9f;
+}
+#custom-media-animation {
+  font-size: 10px;
+  margin-right: 8px;
+}
+#custom-media-now-playing {
+  margin-right: 8px;
+}
+#custom-media-time {
+  color: @overlay0;
+  font-size: 10px;
 }
 
 #language {

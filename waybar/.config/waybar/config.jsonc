@@ -5,7 +5,7 @@
   "output": "",
   "modules-left": ["clock","group/sysmon","hyprland/window"],
   "modules-center": ["custom/archmenu","hyprland/workspaces"],
-  "modules-right": ["upower","hyprland/language",/*"group/ghub",*/"network","bluetooth","pulseaudio","custom/poweroff"],
+  "modules-right": ["group/media","upower","hyprland/language",/*"group/ghub",*/"network","bluetooth","pulseaudio","custom/poweroff"],
 
   "custom/archmenu": {
     "format": "",
@@ -16,7 +16,7 @@
   "hyprland/workspaces": {
     "format": "[{id}]{windows}",
     "tooltip-format": "Left or Right click: activate workspace",
-    "all-outputs": true,
+    "all-outputs": false,
     "on-click": "activate",
     "workspace-taskbar": {
       "enable": true,
@@ -37,7 +37,7 @@
       "(.*) - mpv": "$1"
     },
     "expand": true,
-    "separate-outputs": false,
+    "separate-outputs": true,
     "icon": true,
     "icon-size": 18
   },
@@ -54,23 +54,23 @@
   },
   "group/cpu": {
     "orientation": "inherit",
-    "drawer": {
+/*    "drawer": {
       "transition-duration": 500,
       "children-class": "hidden",
       "transition-left-to-right": true
-    },
-    "modules": ["temperature#cpu","cpu#load","cpu#freq"]
+    },*/ 
+    "modules": ["cpu#load","cpu#freq","temperature#cpu"]
   },
   "temperature#cpu": {
     "interval": 5,
     "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
-    "format": " {icon}{temperatureC}℃",
+    "format": " {icon}{temperatureC}℃",
     "tooltip-format": "System Monitor module/CPU Tempereature",
     "format-icons": ["","","","",""]
   },
   "cpu#load": {
     "interval": 5,
-    "format": "  {icon}",
+    "format": " {icon}",
     "tooltip-format": "System Monitor module/CPU Load: {usage}%",
     "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
   },
@@ -86,11 +86,11 @@
   },
   "group/gpu": {
     "orientation": "inherit",
-    "drawer": {
+/*    "drawer": {
       "transition-duration": 500,
       "children-class": "hidden",
       "transition-left-to-right": true
-    },
+    },*/
     "modules": ["custom/gpu","temperature#gpu","custom/gpu-mem"]
   },
   "custom/gpu": {
@@ -139,6 +139,26 @@
       "on-scroll-up": "shift_up",
       "on-scroll-down": "shift_down"
     }
+  },
+
+  "group/media": {
+    "orientation": "horizontal",
+    "modules": ["custom/media-animation","custom/media-now-playing","custom/media-time"]
+  },
+  "custom/media-animation": {
+    "exec": "~/.config/waybar/scripts/waybar-media-animation.sh",
+    "tooltip": false
+  },
+  "custom/media-now-playing": {
+    "exec": "~/.config/waybar/scripts/waybar-media-now-playing.sh", 
+    "escape": true,
+    "tooltip": false
+  },
+  "custom/media-time": {
+    "exec": "~/.config/waybar/scripts/waybar-media-time.sh",
+    "escape": true,
+    "interval": 1,
+    "tooltip": false
   },
 
   "hyprland/language": {
