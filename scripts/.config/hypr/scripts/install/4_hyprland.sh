@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "###> Start installing Hyprland and related packages..."
 # install packages for hyprland

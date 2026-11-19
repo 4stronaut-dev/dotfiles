@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 hyprctl binds -j | jq -r '
   .[] | select(.has_description) |

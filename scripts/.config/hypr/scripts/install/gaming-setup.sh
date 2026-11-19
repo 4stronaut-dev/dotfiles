@@ -1,12 +1,40 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 echo "###> Start installing gaming setup..."
 
 PACMAN_CONF="/etc/pacman.conf"
 
+# CONCEPT:
+#  - repalce the arch default kernel with cachyos BORE kernel
+#  - Add the ZEN5 cpu core oprimized packages from cachyos repos
+#  - regenerate GRUB to show all kernel oprions and use BORE as default
+#  - add all gaming related packages including proton-cachyos
+#  - install and configure driver for wireless Bluetooth XBox X/S gamepad
+
 # ============================================================
-# 1. CachyOS Keyring + Mirrorlist (znver4)
+# Add a pacman hook to rebuild GRUB config after kernel update
+# ============================================================
+if [ ! -f /etc/pacman.d/hooks/grub-update.hook ]; then
+  sudo tee /etc/pacman.d/hooks/grub-update.hook <<'EOF'
+[Trigger]
+Operation = Install
+Operation = Remove
+Operation = Upgrade
+Type = File
+Target = boot/vmlinuz*
+
+[Action]
+Description = Updating GRUB configuration...
+When = PostTransaction
+Depends = grub
+Exec = /usr/bin/grub-mkconfig -o /boot/grub/grub.cfg
+EOF
+  echo "###> GRUB update hook added."
+fi
+
+# ============================================================
+# CachyOS Keyring + Mirrorlist (znver4)
 # ============================================================
 if [ ! -f /usr/share/pacman/keyrings/cachyos.gpg ]; then
   echo "###> Setting up CachyOS keyring..."
@@ -23,7 +51,7 @@ fi
 
 # Create mirrorlist file manually (avoids version-dependent package URLs)
 if [ ! -f /etc/pacman.d/cachyos-v4-mirrorlist ]; then
-  echo "Server = https://mirror.cachyos.org/repo/v4/\$arch/\$repo" |
+  echo "Server = https://mirror.cachyos.org/repo/x86_64_v4/\$repo" |
     sudo tee /etc/pacman.d/cachyos-v4-mirrorlist >/dev/null
   echo "###> CachyOS v4 mirrorlist created."
 else
@@ -31,13 +59,16 @@ else
 fi
 
 # ============================================================
-# 2. Add CachyOS znver4 repos to pacman.conf (above arch repos)
+# Add CachyOS znver4 repos to pacman.conf (above arch repos)
 # ============================================================
 if ! grep -q '^\[cachyos-znver4\]' "$PACMAN_CONF"; then
   sudo cp "$PACMAN_CONF" "${PACMAN_CONF}.bak.$(date +%Y%m%d%H%M%S)"
   echo "###> Backup created."
 
-  # Insert before the [core] section
+  # Enable x86_64_v4 architecture for pacman
+  sed -i 's/^Architecture = auto/Architecture = x86_64 x86_64_v4/' "$PACMAN_CONF"
+
+  # Insert cachyos optimized repos before the [core] section
   CORE_LINE=$(grep -n '^\[core\]' "$PACMAN_CONF" | head -1 | cut -d: -f1)
   if [ -n "$CORE_LINE" ]; then
     sed -i "${CORE_LINE}i \\
@@ -71,7 +102,7 @@ else
 fi
 
 # ============================================================
-# 3. Enable Multilib
+# Enable Multilib
 # ============================================================
 if ! grep -q '^\[multilib\]' "$PACMAN_CONF"; then
   line=$(grep -n '^\s*#\s*\[multilib\]' "$PACMAN_CONF" | head -1 | cut -d: -f1)
@@ -82,13 +113,13 @@ else
 fi
 
 # ============================================================
-# 4. Full system update (now includes CachyOS optimized packages)
+# Full system update (now includes CachyOS optimized packages)
 # ============================================================
 echo "###> Updating system (this will pull optimized packages)..."
-sudo pacman -Syu --noconfirm
+sudo pacman -Syyu --noconfirm
 
 # ============================================================
-# 5. Install BORE kernel
+# Install CachyOS BORE kernel
 # ============================================================
 if ! pacman -Q linux-cachyos-bore &>/dev/null; then
   echo "###> Installing linux-cachyos-bore kernel..."
@@ -99,39 +130,20 @@ else
 fi
 
 # ============================================================
-# 6. Bootloader update
+# Set CachyOS BORE kernel as the default in GRUB
 # ============================================================
 echo "###> Configuring bootloader..."
-if [ -d /boot/loader ]; then
-  # systemd-boot
-  KERNEL="linux-cachyos-bore"
-  ENTRY="/boot/loader/entries/cachyos-bore.conf"
-  if [ ! -f "$ENTRY" ]; then
-    sudo tee "$ENTRY" >/dev/null <<BOOTEOF
-title   Arch Linux (CachyOS BORE)
-linux   /vmlinuz-${KERNEL}
-initrd  /initramfs-${KERNEL}.img
-options root=PARTUUID=$(blkid -s PARTUUID -o value /dev/nvme0n1p2 2>/dev/null || echo "YOUR_PARTUUID") rw quiet
-BOOTEOF
-    echo "###> systemd-boot entry created. Verify root= in: $ENTRY"
-  else
-    echo "###> systemd-boot entry already exists."
-  fi
-  sudo bootctl update
-elif [ -f /boot/grub/grub.cfg ]; then
-  # GRUB
-  sudo grub-mkconfig -o /boot/grub/grub.cfg
-  echo "###> GRUB config regenerated."
-elif [ -f /boot/limine/limine.cfg ]; then
-  # Limine (auto-detects kernels, no manual config needed)
-  echo "###> Limine detected — kernel will be auto-detected at boot."
-else
-  echo "###> WARNING: No known bootloader detected. Manually add a boot entry for vmlinuz-linux-cachyos-bore."
+if ! grep -q '^GRUB_TOP_LEVEL' /etc/default/grub; then
+  sudo sed -i '/^GRUB_DEFAULT=0/a GRUB_TOP_LEVEL="/boot/vmlinuz-linux-cachyos-bore"' /etc/default/grub
+  echo "###> Bore kernel set as GRUB default."
 fi
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+echo "###> GRUB config regenerated."
 
 # ============================================================
-# 7. Gaming packages
+# Gaming packages
 # ============================================================
+# mesa and vulkan 64bit and 32bit , steam, lutris, etc..
 echo "###> Installing gaming packages..."
 sudo pacman -S --needed --noconfirm mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon \
   gamemode lib32-gamemode mangohud lib32-mangohud gamescope steam lutris
@@ -146,8 +158,9 @@ echo "> 3. Start Lutris. In wine runners section configure Proton-CachyOS as the
 echo "> 4. (optional) In Lutris the runner has a system tab, here check the default game install folder, enable and configure gamemode, gamescope, mangohud."
 
 # ============================================================
-# 8. Input group
+# XBox Series X/S bluetooth gamepad configuration
 # ============================================================
+# Add my user to input group
 if ! id -nG "$USER" | grep -qw "input"; then
   echo "###> Adding $USER to input group..."
   sudo gpasswd -a "$USER" input
@@ -155,9 +168,7 @@ else
   echo "###> $USER is already in input group."
 fi
 
-# ============================================================
-# 9. Xbox Series X/S wireless controller
-# ============================================================
+# Driver installation
 echo "###> Installing Xbox Series X/S controller driver..."
 sudo pacman -S --needed --noconfirm dkms linux-cachyos-bore-headers
 yay -S --needed --noconfirm xpadneo-dkms
@@ -179,7 +190,7 @@ fi
 echo "###> Xbox Series X/S controller driver configured. Please reboot then do the pairing after reboot!"
 
 # ============================================================
-# 10. Logitech Solaar
+# Logitech Keyboard and Mouse tool installation
 # ============================================================
 sudo pacman -S --needed --noconfirm solaar
 sudo udevadm control --reload-rules

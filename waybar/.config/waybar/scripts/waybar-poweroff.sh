@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 options=(" Lock" "󰍃 Logout" "󰜉 Restart" " Power Off")
 choice=$(printf '%s\n' "${options[@]}" | wofi --show dmenu --prompt "Power menu" --hide-scroll --width 140 --lines 5)

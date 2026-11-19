@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # timeout in [s] to the next wallpaper change
 INTERVAL=120

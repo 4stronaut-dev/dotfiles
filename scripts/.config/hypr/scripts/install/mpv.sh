@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "###> Installing mpv and media related packages..."
 # install packages for mpv media player

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "###> Installing stow..."
 # install packages for GNU Stow

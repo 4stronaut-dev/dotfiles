@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "###> Installing Brave browser..."
 # install packages for Brave web browser

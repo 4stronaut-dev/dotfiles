@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "###> Installing voxtype for dictation and transcribing..."
 

@@ -60,12 +60,6 @@ hl.bind(
 	hl.dsp.exec_cmd("hyprshot -m region"),
 	{ description = "Create screenshot on a selectable region of the screeen." }
 )
-hl.bind(
-	mainMod .. " + V",
-	hl.dsp.exec_cmd("voxtype record start"),
-	{ description = "Dictation: Hold key to talk, transcription on key release." }
-)
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("voxtype record stop"), { release = true })
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(progs.wallpaperChange), { description = "Change wallpaper random." })
 -- Move focus
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }), { description = "Move focus to left." })

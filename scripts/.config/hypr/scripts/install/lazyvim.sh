@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "###> Installing NeoVim with LazyVim..."
 # install packages for NeoVim  with LazyVim extension to become an IDE

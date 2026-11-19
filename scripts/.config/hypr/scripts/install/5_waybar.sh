@@ -1,11 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "###> Installing waybar and the related packages..."
 
 # install packages for waybar
 sudo pacman -S --needed --noconfirm ttf-font-awesome \
-  swaync pavucontrol bluez bluez-utils blueman
-yay -S --needed --noconfirm waybar-git
+  waybar swaync pavucontrol bluez bluez-utils blueman
 
 echo "###> Enabling Bluetooth service..."
 sudo systemctl enable --now bluetooth.service

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 CURRENT_DISABLED_VALUE=$(hyprctl monitors -j | jq -r ".[] | select(.name == \"DP-2\") | .disabled")
 

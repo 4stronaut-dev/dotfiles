@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # wallpaper source
 WALLPAPER_DIR="$HOME/dotfiles/hyprpaper/.config/hypr/hyprpapers/"

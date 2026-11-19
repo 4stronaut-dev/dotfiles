@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "###> Installing SDDM and Sugar Candy theme..."
 # install Sugar-Candy theme for sddm login manager

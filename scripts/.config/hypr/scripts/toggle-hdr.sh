@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 CURRENT_CM=$(hyprctl monitors -j | jq -r ".[] | select(.name == \"DP-1\") | .colorManagementPreset")
 

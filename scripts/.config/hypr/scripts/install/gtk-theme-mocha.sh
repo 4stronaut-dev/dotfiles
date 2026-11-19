@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "###> Installing GTK theme settins..."
 # install packages for GTK theme settings
