@@ -8,7 +8,7 @@ while :; do
     status=$(playerctl metadata --format '{{status}}' 2>/dev/null)
 
     if [ "$status" == "Playing" ]; then
-      echo "$frame"
+      echo "$frame "
     elif [ "$status" == "Paused" ]; then
       echo ""
     else
