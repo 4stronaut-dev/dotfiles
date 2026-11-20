@@ -62,11 +62,11 @@
   },
   "group/cpu": {
     "orientation": "inherit",
-/*    "drawer": {
+    "drawer": {
       "transition-duration": 500,
       "children-class": "hidden",
       "transition-left-to-right": true
-    },*/ 
+    },
     "modules": ["cpu#load","cpu#freq","temperature#cpu"]
   },
   "temperature#cpu": {
@@ -94,11 +94,11 @@
   },
   "group/gpu": {
     "orientation": "inherit",
-/*    "drawer": {
+    "drawer": {
       "transition-duration": 500,
       "children-class": "hidden",
       "transition-left-to-right": true
-    },*/
+    },
     "modules": ["custom/gpu","temperature#gpu","custom/gpu-mem"]
   },
   "custom/gpu": {
@@ -160,7 +160,8 @@
   "custom/media-now-playing": {
     "exec": "~/.config/waybar/scripts/waybar-media-now-playing.sh", 
     "escape": true,
-    "tooltip": false,
+    "tooltip": true,
+    "tooltip-format": "Media module\n\nLeft click: play-pause\tRight click: next",
     "on-click": "playerctl play-pause",
     "on-click-right": "playerctl next"
   },

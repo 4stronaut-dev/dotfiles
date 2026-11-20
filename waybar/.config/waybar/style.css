@@ -141,7 +141,7 @@ box:hover > #custom-poweroff {
   font-size: 13px;
 }
 #custom-media-time {
-  color: @overlay0;
+  color: @overlay1;
   font-size: 12px;
 }
 

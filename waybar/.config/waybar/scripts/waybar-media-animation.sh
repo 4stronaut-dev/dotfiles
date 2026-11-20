@@ -1,16 +1,25 @@
 #!/usr/bin/env bash
 
-# "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"
+# "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█", "▁▁▁▁"
 
 animation_frames=("▅▄▂▃" "▄▂▃▄" "▂▃▄▅" "▂▃▂▄" "▃▅▃▄" "▅▂▃▄")
-while :; do
-  for frame in "${animation_frames[@]}"; do
-    status=$(playerctl metadata --format '{{status}}' 2>/dev/null)
+declare -A icons=(
+  [spotify]=""
+  [mpv]=""
+  [vlc]="󰕼"
+  [brave]=""
+  [cliamp]="󰲸"
+)
 
+while :; do
+  player=$(playerctl metadata -f '{{playerName}}' 2>/dev/null)
+  status=$(playerctl metadata -f '{{status}}' 2>/dev/null)
+  icon="${icons[$player]:-""}"
+  for frame in "${animation_frames[@]}"; do
     if [ "$status" == "Playing" ]; then
-      echo "$frame "
+      echo "$icon $frame "
     elif [ "$status" == "Paused" ]; then
-      echo ""
+      echo "$icon ▁▁▁▁ "
     else
       echo ""
     fi
