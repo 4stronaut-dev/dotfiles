@@ -196,4 +196,3 @@ sudo pacman -S --needed --noconfirm solaar
 sudo udevadm control --reload-rules
 
 echo "###> Gaming setup installation completed!"
-echo "###> Don't forget to select the CachyOS BORE kernel from your boot menu after reboot."

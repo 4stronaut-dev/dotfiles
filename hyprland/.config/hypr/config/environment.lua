@@ -11,7 +11,7 @@ hl.env("QT_QPA_PLATFORM", "wayland")
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 
-hl.env("GDK_BACKEND", "wayland")
+hl.env("GDK_BACKEND", "wayland,x11")
 hl.env("SDL_VIDEODRIVER", "wayland")
 
 hl.env("WLR_NO_HARDWARE_CURSORS", "1")

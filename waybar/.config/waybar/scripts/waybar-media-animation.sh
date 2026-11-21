@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
 # "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█", "▁▁▁▁"
+# "" is equivalent to $(printf '\uEC85') and BraveIcon.otf font has to be \
+# installed and added into the terminal font configuration
 
 animation_frames=("▅▄▂▃" "▄▂▃▄" "▂▃▄▅" "▂▃▂▄" "▃▅▃▄" "▅▂▃▄")
 declare -A icons=(
   [spotify]=""
   [mpv]=""
   [vlc]="󰕼"
-  [brave]=""
+  [brave]=""
   [cliamp]="󰲸"
 )
 
