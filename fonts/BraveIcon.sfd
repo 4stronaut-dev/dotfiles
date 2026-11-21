@@ -1,0 +1,193 @@
+SplineFontDB: 3.2
+FontName: BraveIcon
+FullName: BraveIcon
+FamilyName: BraveIcon
+Weight: Regular
+Copyright: Copyright (c) 2026, Unknown
+Version: 001.000
+ItalicAngle: 0
+UnderlinePosition: -100
+UnderlineWidth: 50
+Ascent: 800
+Descent: 200
+InvalidEm: 0
+sfntRevision: 0x00010000
+LayerCount: 2
+Layer: 0 0 "Back" 1
+Layer: 1 0 "Fore" 0
+XUID: [1021 488 2134273489 12295297]
+StyleMap: 0x0000
+FSType: 0
+OS2Version: 4
+OS2_WeightWidthSlopeOnly: 0
+OS2_UseTypoMetrics: 1
+CreationTime: 1795208985
+ModificationTime: 1795213044
+PfmFamily: 17
+TTFWeight: 400
+TTFWidth: 5
+LineGap: 90
+VLineGap: 0
+Panose: 2 0 5 9 0 0 0 0 0 0
+OS2TypoAscent: 800
+OS2TypoAOffset: 0
+OS2TypoDescent: -200
+OS2TypoDOffset: 0
+OS2TypoLinegap: 90
+OS2WinAscent: 722
+OS2WinAOffset: 0
+OS2WinDescent: 197
+OS2WinDOffset: 0
+HheadAscent: 722
+HheadAOffset: 0
+HheadDescent: -197
+HheadDOffset: 0
+OS2SubXSize: 650
+OS2SubYSize: 700
+OS2SubXOff: 0
+OS2SubYOff: 140
+OS2SupXSize: 650
+OS2SupYSize: 700
+OS2SupXOff: 0
+OS2SupYOff: 480
+OS2StrikeYSize: 49
+OS2StrikeYPos: 258
+OS2Vendor: 'PfEd'
+OS2CodePages: 00000001.00000000
+OS2UnicodeRanges: 00000000.10000000.00000000.00000000
+MarkAttachClasses: 1
+DEI: 91125
+LangName: 1033 "" "" "" "" "" "Version 001.000"
+Encoding: UnicodeFull
+UnicodeInterp: none
+NameList: AGL For New Fonts
+DisplaySize: -48
+AntiAlias: 1
+FitToEm: 0
+WinInfo: 60231 51 19
+BeginPrivate: 5
+BlueShift 1 0
+StdHW 5 [166]
+StdVW 4 [48]
+StemSnapH 16 [39 140 166 185]
+StemSnapV 10 [20 48 50]
+EndPrivate
+BeginChars: 1114113 2
+
+StartChar: .notdef
+Encoding: 1114112 -1 0
+Width: 1000
+GlyphClass: 1
+Flags: MW
+HStem: 0 50<100 900 100 950> 483 50<100 900 100 100>
+VStem: 50 50<50 50 50 483> 900 50<50 483 483 483>
+LayerCount: 2
+Fore
+SplineSet
+50 0 m 1
+ 50 533 l 1
+ 950 533 l 1
+ 950 0 l 1
+ 50 0 l 1
+100 50 m 1
+ 900 50 l 1
+ 900 483 l 1
+ 100 483 l 1
+ 100 50 l 1
+EndSplineSet
+Validated: 1
+EndChar
+
+StartChar: uniEC85
+Encoding: 60549 60549 1
+Width: 1000
+Flags: W
+HStem: 491 42<360 407.513> 609 174<352.176 473.682 527.062 664.114> 635 148<419.899 583.938>
+VStem: 382 52<337.631 399.191> 489 21<240.403 276.616> 566 51<335.731 398.822>
+LayerCount: 2
+Fore
+SplineSet
+626 125 m 6x9c
+ 570 156 l 6
+ 540 171 511 179 493 179 c 6
+ 491 179 l 6
+ 484 179 471 178 429 156 c 6
+ 372 125 l 6
+ 370 124 369 122 369 120 c 4
+ 369 110 421 78 460 44 c 4
+ 492 17 493 15 498 15 c 6
+ 499 15 l 6
+ 508 15 518 27 527 34 c 6
+ 623 109 l 6
+ 628 112 630 116 630 120 c 4
+ 630 122 628 124 626 125 c 6x9c
+510 263 m 4
+ 510 227 620 163 646 163 c 4
+ 674 163 708 206 708 239 c 4
+ 708 265 690 287 690 303 c 4
+ 690 313 693 317 707 331 c 6
+ 789 418 l 6
+ 802 432 815 440 815 454 c 4
+ 815 478 771 550 707 627 c 5
+ 659 617 612 609 603 609 c 4xdc
+ 585 609 533 635 499 635 c 6
+ 498 635 l 6xbc
+ 466 634 420 609 398 609 c 6
+ 395 609 l 5xdc
+ 291 626 l 5
+ 227 550 183 478 183 454 c 4
+ 183 449 181 449 181 448 c 4
+ 181 447 185 444 210 418 c 6
+ 291 331 l 6
+ 306 316 308 313 308 303 c 4
+ 308 287 291 265 291 239 c 4
+ 291 206 325 163 353 163 c 4
+ 379 163 489 227 489 263 c 4
+ 489 284 382 328 382 357 c 4
+ 382 376 424 417 424 447 c 4
+ 424 464 415 470 360 491 c 6
+ 282 520 l 6
+ 280 521 280 522 280 523 c 4
+ 280 527 331 533 361 533 c 4
+ 378 533 458 519 458 500 c 4
+ 458 487 434 380 434 352 c 4
+ 434 343 436 340 440 339 c 4
+ 476 330 492 328 500 328 c 4
+ 506 328 521 330 539 334 c 4
+ 560 339 566 342 566 352 c 4
+ 566 356 566 361 565 367 c 6
+ 543 485 l 6
+ 542 491 541 495 541 502 c 4
+ 541 509 542 511 543 511 c 4
+ 602 527 625 533 635 533 c 4
+ 670 533 719 527 719 523 c 4
+ 719 522 719 521 717 520 c 6
+ 638 491 l 6
+ 585 471 575 464 575 446 c 4
+ 575 418 617 375 617 357 c 4
+ 617 328 510 283 510 263 c 4
+881 552 m 5
+ 910 469 l 5
+ 815 110 l 6
+ 793 24 778 -1 727 -36 c 6
+ 555 -153 l 6
+ 527 -170 514 -179 500 -179 c 4
+ 486 -179 472 -170 444 -153 c 6
+ 272 -36 l 6
+ 221 0 206 26 184 110 c 6
+ 90 469 l 5
+ 117 552 l 5
+ 95 607 l 5
+ 159 673 l 6
+ 172 686 193 693 221 693 c 4
+ 273 693 273 694 352 783 c 5xbc
+ 647 783 l 5
+ 726 694 725 693 777 693 c 4
+ 805 693 826 686 839 673 c 6
+ 904 607 l 5
+ 881 552 l 5
+EndSplineSet
+Validated: 8388609
+EndChar
+EndChars
+EndSplineFont
